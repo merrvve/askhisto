@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/User.interface';
 
 @Injectable({
@@ -6,14 +7,14 @@ import { User } from '../models/User.interface';
 })
 export class AuthService {
 
-  private readonly _user = signal<User | null>(null);
+  private readonly _user = new BehaviorSubject<User | null>(null);
 
-  get user() {
-    return this._user.asReadonly();
-  }
+  // This exposes the current user as an observable
+  public user : Observable<User | null> = this._user.asObservable();
 
+  // This checks if the user is logged in
   get isLoggedIn() {
-    return this._user()?.id !== null;
+    return this._user.value?.id !== null;
   }
 
   login(): void {
@@ -25,11 +26,11 @@ export class AuthService {
       avatar: 'https://example.com/avatar.jpg',
     };
 
-    this._user.set(fakeUser);
+    this._user.next(fakeUser);
   }
 
   logout(): void {
-    this._user.set(null);
+    this._user.next(null);
   }
 
   register(displayName: string, description?: string, avatar?: string): void {
@@ -41,6 +42,6 @@ export class AuthService {
       avatar,
     };
 
-    this._user.set(newUser);
+    this._user.next(newUser);
   }
 }

@@ -1,24 +1,36 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { BadgeModule } from 'primeng/badge';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { User } from '../../models/User.interface';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-side-nav',
-  imports: [MenuModule, BadgeModule, RippleModule, AvatarModule],
+  imports: [MenuModule, BadgeModule, RippleModule, AvatarModule, RouterModule],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss'
 })
 export class SideNavComponent {
 
-    @Input() user: User | null = null;
+    
+    private authService = inject(AuthService);
+    
+
+    // Reactive signal to track the current user
+    user: User | null = null;
 
     guestMenuItems: MenuItem[] | undefined;
     userMenuItems: MenuItem[] | undefined;
 
+
+    
   ngOnInit() {
+    this.authService.user.subscribe(
+      user=> this.user = user
+    )
       this.userMenuItems = [
           {
               separator: true
@@ -88,7 +100,8 @@ export class SideNavComponent {
                 {
                     label: 'Log In',
                     icon: 'pi pi-sign-in',
-                    shortcut: '⌘+Q'
+                    shortcut: '⌘+Q',
+                    routerLink: ['/login'] 
                 },
                 {
                     label: 'Register',

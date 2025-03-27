@@ -13,13 +13,10 @@ import { AuthService } from './app/services/auth.service';
 export class AppComponent {
   title = 'askhisto';
   private authService = inject(AuthService);
-  user = this.authService.user();
-
+ 
   constructor() {
-    // Reactive signal-based subscription
-    effect(() => {
-      console.log('User changed:', this.authService.user());
-    });
+   
+    
   }
   
 }
