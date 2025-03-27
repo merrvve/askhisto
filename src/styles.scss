@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+/* Define Global Styles */
+:root {
+  --font-primary: 'Poppins', sans-serif;
+}
+
+/* Apply Global Font */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Dark Mode (Optional) */
+@mixin dark-mode {
+  &:where(.app-dark, .app-dark *) {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+  }
+}
+

@@ -1,0 +1,9 @@
+<div class="flex align-items-center justify-content-between p-3 bg-primary-300 shadow-2 text-white font-bold">
+    <span>Logo</span>
+    <span>
+        <div class="card flex justify-center">
+            <p-menu #menu [model]="items" [popup]="true" />
+            <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>
+        </div>
+    </span>
+</div>
