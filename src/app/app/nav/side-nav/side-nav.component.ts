@@ -105,8 +105,7 @@ export class SideNavComponent {
                     label: 'Log In',
                     icon: 'pi pi-sign-in',
                     shortcut: '⌘+Q',
-                    command: ()=> {
-                        
+                    command: ()=> {                      
                         this.router.navigate(['/login']);
                       } 
                 },
