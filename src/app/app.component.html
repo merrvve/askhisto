@@ -7,7 +7,15 @@
             <app-side-nav></app-side-nav>
         </div>
         <div class="w-12 sm:w-9">
-            <router-outlet></router-outlet>
+            <div class="flex flex-column sm:flex-row gap-6">
+                <div class="w-12 sm:w-9">
+                    <router-outlet></router-outlet>
+                </div>
+                <div class="w-12 sm:w-3">
+                    <app-right-nav></app-right-nav>
+                </div>
+            </div>
+            
         </div>
     </div>
     

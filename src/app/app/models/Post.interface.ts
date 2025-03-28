@@ -17,10 +17,12 @@ export interface Category {
 export interface Post {
     id?: string;
     userId: string;
+    userName: string;
+    userAvatar: string;
     title: string;
     images: string[];
     annotations?: Annotation[];
     text: string;
     labels: Label[];
-    category: Category;
+    category?: Category;
 }

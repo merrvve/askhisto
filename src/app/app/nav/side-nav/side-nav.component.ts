@@ -5,7 +5,7 @@ import { BadgeModule } from 'primeng/badge';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { User } from '../../models/User.interface';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-side-nav',
@@ -17,7 +17,7 @@ export class SideNavComponent {
 
     
     private authService = inject(AuthService);
-    
+    private router = inject(Router);
 
     // Reactive signal to track the current user
     user: User | null = null;
@@ -36,7 +36,7 @@ export class SideNavComponent {
               separator: true
           },
           {
-              label: 'Documents',
+              label: 'Posts',
               items: [
                   {
                       label: 'New',
@@ -66,7 +66,11 @@ export class SideNavComponent {
                   {
                       label: 'Logout',
                       icon: 'pi pi-sign-out',
-                      shortcut: '⌘+Q'
+                      shortcut: '⌘+Q',
+                      command: ()=> {
+                        this.authService.logout();
+                        this.router.navigate(['']);
+                      }
                   }
               ]
           },
@@ -101,7 +105,10 @@ export class SideNavComponent {
                     label: 'Log In',
                     icon: 'pi pi-sign-in',
                     shortcut: '⌘+Q',
-                    routerLink: ['/login'] 
+                    command: ()=> {
+                        
+                        this.router.navigate(['/login']);
+                      } 
                 },
                 {
                     label: 'Register',

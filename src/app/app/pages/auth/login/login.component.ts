@@ -15,6 +15,6 @@ export class LoginComponent {
 
   login() {
     this.authService.login();
-    this.router.navigate(['/login'])
+    this.router.navigate([''])
   }
 }

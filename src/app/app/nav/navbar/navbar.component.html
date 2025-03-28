@@ -1,9 +1,14 @@
 <div class="flex align-items-center justify-content-between p-3 bg-primary-300 shadow-2 text-white font-bold">
-    <span>Logo</span>
+    <span [routerLink]="['']" class="cursor-pointer">Logo</span>
     <span>
-        <div class="card flex justify-center">
-            <p-menu #menu [model]="items" [popup]="true" />
-            <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>
-        </div>
+        @if (user) {
+            <div class="card flex justify-center">
+                <p-menu #menu [model]="items" [popup]="true" />
+                <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>
+            </div>
+        }
+        @else {
+            <p-button label="Login" icon="pi pi-sign-in" [routerLink]="['/login']" ></p-button> 
+        }
     </span>
 </div>
