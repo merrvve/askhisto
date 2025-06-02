@@ -1,0 +1,7 @@
+{
+  "name": "histology-quiz-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
