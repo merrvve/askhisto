@@ -1,0 +1,85 @@
+@if(isComplete) {
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Quiz Complete</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-text-center ion-padding" fullscreen>
+  <div class="center-content">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" size="large" (click)="Home()">
+            Home
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" size="large" (click)="Reload()">
+            Start Again
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+  </div>
+</ion-content>
+
+}
+@else {
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Question {{ currentIndex + 1 }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+@if(questions) {
+<ion-content class="ion-padding">
+
+  @if (questions.length > 0) {
+  <ion-card>
+    <!-- Swipable images -->
+
+    @for (img of questions[currentIndex].images; track img) {
+
+    <img [src]="img" style="width: 100%; border-radius: 8px;" />
+
+    }
+
+
+    <ion-card-content class="ion-padding-top">
+      <ion-grid>
+        <ion-row>
+          @for (choice of questions[currentIndex].choices; track choice; let i = $index) {
+          <ion-col size="12">
+            <ion-button expand="block" fill="outline" (click)="selectAnswer(i)" [color]="getChoiceColor(i)">
+              <!-- @if (selectedChoice === i) {
+                    <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+                  } -->
+              {{ choice }}
+            </ion-button>
+          </ion-col>
+          }
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="nextQuestion()" [disabled]="selectedChoice === null">
+    Next
+  </ion-button>
+  } @else {
+  <ion-text>Loading questions...</ion-text>
+  }
+</ion-content>
+}
+@else {
+<ion-content>Loading...</ion-content>
+
+}
+
+
+
+}

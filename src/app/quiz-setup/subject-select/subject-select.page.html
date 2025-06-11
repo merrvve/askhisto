@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>FILTER BY SUBJECT</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    
+      @for (subject of subjectOptions; track subject) {
+        <ion-row>
+        <ion-col size="12">
+          <ion-button
+            expand="block"
+            fill="outline"
+            [color]="isSelected(subject) ? 'primary' : 'medium'"
+            (click)="toggleSelection(subject)"
+          >
+            @if (isSelected(subject)) {
+              <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+            }
+            {{ subject }}
+          </ion-button>
+        </ion-col>
+        </ion-row>
+      }
+    
+  </ion-grid>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="next()">Next</ion-button>
+</ion-content>

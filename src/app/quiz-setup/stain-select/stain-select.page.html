@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>FILTER BY STAINING METHOD</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    
+      @for (stain of stainOptions; track stain) {
+        <ion-row>
+        <ion-col size="12">
+          <ion-button
+            expand="block"
+            fill="outline"
+            [color]="isSelected(stain) ? 'primary' : 'medium'"
+            (click)="toggleSelection(stain)"
+          >
+            @if (isSelected(stain)) {
+              <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+            }
+            {{ stain }}
+          </ion-button>
+        </ion-col>
+        </ion-row>
+      }
+    
+  </ion-grid>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="next()">Next</ion-button>
+</ion-content>
