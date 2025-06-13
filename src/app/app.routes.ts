@@ -26,4 +26,28 @@ export const routes: Routes = [
     path: 'quiz',
     loadComponent: () => import('./quiz/quiz/quiz.page').then( m => m.QuizPage)
   },
+  {
+    path: 'profile',
+    loadComponent: () => import('./profile/profile/profile.page').then( m => m.ProfilePage)
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./profile/login/login.page').then( m => m.LoginPage)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./profile/register/register.page').then( m => m.RegisterPage)
+  },
+  {
+    path: 'ask-question',
+    loadComponent: () => import('./forum/ask-question/ask-question.page').then( m => m.AskQuestionPage)
+  },
+  {
+    path: 'forum-home',
+    loadComponent: () => import('./forum/forum-home/forum-home.page').then( m => m.ForumHomePage)
+  },
+  {
+    path: 'post',
+    loadComponent: () => import('./forum/posts/post/post.page').then( m => m.PostPage)
+  },
 ];

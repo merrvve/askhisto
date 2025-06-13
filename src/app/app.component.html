@@ -1,3 +1,39 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
+<ion-app fullscreen >
+  <ion-header></ion-header>
+  <ion-content  class="ion-padding" style="--padding-bottom: 140px">
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
+  
+  <!-- Global Bottom Navigation -->
+  <ion-footer >
+    <ion-tab-bar slot="bottom">
+
+      <ion-tab-button (click)="navigate('home')">
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="navigate('quiz')">
+        <ion-icon name="school-outline"></ion-icon>
+        <ion-label>Start Quiz</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="navigate('ask-question')">
+        <ion-icon name="help-circle-outline"></ion-icon>
+        <ion-label>Ask Question</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="navigate('forum-home')">
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+        <ion-label>See Posts</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="navigate('profile')">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-footer>
+
 </ion-app>
