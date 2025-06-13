@@ -18,54 +18,43 @@
     <ion-card-subtitle>5 Since Last Visit</ion-card-subtitle>
   </ion-card-header>
 <ion-card-content>
-  <ion-list>
-
-    <ion-item>
-      
-      <!-- Make image wider -->
-      <ion-thumbnail slot="start" style="width: 100px; height: 100px;">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-      </ion-thumbnail>
-
-      <ion-label>
-        lorem ipsumkjçkdawbvawjdbkvadwnkçvadvamwçvawrnegnfvwçqerkgvnqwlçrekngfq
-      </ion-label>
-
-    </ion-item>
-    <div class="ion-text-end ion-padding-horizontal">
-      <ion-button fill="clear" size="small">
-        See Details
-        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
-      </ion-button>
-    </div>
+ <ion-list>
+  @if (posts$ | async; as posts) {
+    @for (post of posts; track post.id) {
       <ion-item>
-      
-      <!-- Make image wider -->
-      <ion-thumbnail slot="start" style="width: 100px; height: 100px;">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-      </ion-thumbnail>
+        <!-- Make image wider -->
+        <ion-thumbnail slot="start" style="width: 100px; height: 100px;">
+          <img [src]="post.images[0] || 'assets/placeholder.jpg'" alt="Post Image" />
+        </ion-thumbnail>
 
-      <ion-label>
-        lorem ipsumkjçkdawbvawjdbkvadwnkçvadvamwçvawrnegnfvwçqerkgvnqwlçrekngfq
-      </ion-label>
+        <ion-label>
+          {{ post.content | truncate : 100 }}
+        </ion-label>
+      </ion-item>
 
-    </ion-item>
-    <div class="ion-text-end ion-padding-horizontal">
-      <ion-button fill="clear" size="small">
-        See Details
-        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
-      </ion-button>
-    </div>
+      <div class="ion-text-end ion-padding-horizontal">
+        <ion-button fill="clear" size="small" (click)="viewDetails(post)">
+          See Details
+          <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+      </div>
+    }
 
-    <!-- New row for the See More button -->
-    <div class="ion-text-end ion-padding-horizontal">
-      <ion-button >
+    <!-- All posts button -->
+    <div class="ion-text-end ion-padding-horizontal ion-margin-top">
+      <ion-button (click)="viewAllPosts()">
         All Posts
         <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
       </ion-button>
     </div>
 
-  </ion-list>
+  } @else {
+    <ion-item>
+      <ion-label>Loading...</ion-label>
+    </ion-item>
+  }
+</ion-list>
+
 </ion-card-content>  
 </ion-card>
 

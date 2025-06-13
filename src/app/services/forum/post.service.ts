@@ -53,4 +53,13 @@ export class PostService {
     const q = query(this.postsCollection, where('type', '==', type), orderBy('addedDate', 'desc'), limit(20));
     return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
   }
+
+  getLatestPosts(limitCount: number = 5): Observable<Post[]> {
+  const q = query(
+    this.postsCollection,
+    orderBy('addedDate', 'desc'),
+    limit(limitCount)
+  );
+  return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
+}
 }

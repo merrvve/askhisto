@@ -1,13 +1,57 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>forum-home</ion-title>
+    <ion-title>HOME</ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content fullscreen>
+ 
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Latest Posts</ion-card-title>
+    <ion-card-subtitle>5 Since Last Visit</ion-card-subtitle>
+  </ion-card-header>
+<ion-card-content>
+ <ion-list>
+  @if (posts$ | async; as posts) {
+    @for (post of posts; track post.id) {
+      <ion-item>
+        <!-- Make image wider -->
+        <ion-thumbnail slot="start" style="width: 100px; height: 100px;">
+          <img [src]="post.images[0] || 'assets/placeholder.jpg'" alt="Post Image" />
+        </ion-thumbnail>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">forum-home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+        <ion-label>
+          {{ post.content | truncate : 100 }}
+        </ion-label>
+      </ion-item>
+
+      <div class="ion-text-end ion-padding-horizontal">
+        <ion-button fill="clear" size="small" (click)="viewDetails(post)">
+          See Details
+          <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+      </div>
+    }
+
+    <!-- All posts button -->
+    <div class="ion-text-end ion-padding-horizontal ion-margin-top">
+      <ion-button (click)="viewAllPosts()">
+        Categories
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+
+  } @else {
+    <ion-item>
+      <ion-label>Loading...</ion-label>
+    </ion-item>
+  }
+</ion-list>
+
+</ion-card-content>  
+</ion-card>
+
+  
+
 </ion-content>
+
