@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader,  IonIcon,  IonRow, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader,  IonIcon,  IonRow, IonTitle, IonToolbar, IonFabButton, IonFab } from '@ionic/angular/standalone';
 import { QuizSetupService } from 'src/app/services/quiz-setup.service';
 import { Router } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './number-select.page.html',
   styleUrls: ['./number-select.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonGrid, IonRow, IonCol, IonIcon]
+  imports: [IonFab, IonFabButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonGrid, IonRow, IonCol, IonIcon]
 })
 export class NumberSelectPage implements OnInit {
 
@@ -31,5 +31,9 @@ export class NumberSelectPage implements OnInit {
   next() {
     this.router.navigate(['/quiz'])
   }
+
+  previous() {
+ this.router.navigate(['/subject-select'])
+}
 
 }

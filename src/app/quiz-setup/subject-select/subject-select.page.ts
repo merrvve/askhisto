@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonButton, IonCol,  IonGrid, IonIcon, IonRow, IonTitle, IonContent, IonHeader, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonCol,  IonGrid, IonIcon, IonRow, IonTitle, IonContent, IonHeader, IonToolbar, IonFab, IonFabButton, IonLabel } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { QuizSetupService } from 'src/app/services/quiz-setup.service';
 
@@ -10,7 +10,7 @@ import { QuizSetupService } from 'src/app/services/quiz-setup.service';
   templateUrl: './subject-select.page.html',
   styleUrls: ['./subject-select.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonContent, CommonModule, FormsModule, IonButton, IonGrid, IonRow, IonCol, IonIcon, IonTitle,  IonToolbar]
+  imports: [ IonFabButton, IonFab, IonHeader, IonContent, CommonModule, FormsModule, IonButton, IonGrid, IonRow, IonCol, IonIcon, IonTitle,  IonToolbar]
 })
 export class SubjectSelectPage implements OnInit {
 

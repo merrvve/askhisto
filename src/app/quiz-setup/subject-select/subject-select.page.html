@@ -4,6 +4,14 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-text-center ion-padding" fullscreen>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="next()" >
+    <ion-icon name="arrow-forward-outline"></ion-icon>
+    
+  </ion-fab-button>
+  
+</ion-fab>
+
  <ion-grid>
       @for (subject of subjectOptions; track subject) {
         <ion-row>
@@ -25,8 +33,7 @@
     
   </ion-grid>
 
-  <ion-button expand="block" class="ion-margin-top" (click)="next()">Next</ion-button>
-
+  
 </ion-content>
   
  
