@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, IdTokenResult } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, User as FirebaseUser } from '@angular/fire/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'src/app/models/User';
 
@@ -7,7 +7,7 @@ import { User } from 'src/app/models/User';
   providedIn: 'root',
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<User | null>( null);
+  private userSubject = new BehaviorSubject<User | null>(null);
 
   user$: Observable<User | null> = this.userSubject.asObservable();
 
@@ -18,14 +18,21 @@ export class AuthService {
   }
 
   // Sign up with email & password
-  signUp(email: string, password: string): Promise<User> {
+  signUp(email: string, password: string): Promise<FirebaseUser> {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then(result => result.user);
   }
 
   // Login with email & password
-  login(email: string, password: string): Promise<User> {
+  login(email: string, password: string): Promise<FirebaseUser> {
     return signInWithEmailAndPassword(this.auth, email, password)
+      .then(result => result.user);
+  }
+
+  // Login with Google
+  signInWithGoogle(): Promise<FirebaseUser> {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(this.auth, provider)
       .then(result => result.user);
   }
 
@@ -35,7 +42,7 @@ export class AuthService {
   }
 
   // Get current user snapshot
-  get currentUser(): User | null {
+  get currentUser(): FirebaseUser | null {
     return this.auth.currentUser;
   }
 }

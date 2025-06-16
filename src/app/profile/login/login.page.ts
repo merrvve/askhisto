@@ -34,7 +34,7 @@ export class LoginPage  {
 
   async loginWithGoogle() {
     try {
-      await this.authService.login(this.email, this.password);
+      await this.authService.signInWithGoogle();
       this.router.navigate(['/home'], { replaceUrl: true });
     } catch (err: any) {
       console.error(err);

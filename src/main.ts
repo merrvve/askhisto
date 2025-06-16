@@ -39,4 +39,5 @@ bootstrapApplication(AppComponent, {
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
   ],
+
 });

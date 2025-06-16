@@ -44,7 +44,9 @@ export class ProfilePage implements OnInit {
     //   phoneNumber: '546546'
     // }
   }
-  logout() {}
+  logout() {
+    this.authService.logout();
+  }
   ngOnDestroy() {
     this.authSub?.unsubscribe();
   }

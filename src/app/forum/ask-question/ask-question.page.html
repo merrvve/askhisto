@@ -1,13 +1,70 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>ask-question</ion-title>
+    <ion-title>Create Post</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ask-question</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <!-- Type -->
+  <ion-item>
+    <ion-select
+      label="Type"
+      labelPlacement="floating"
+      placeholder="Select type">
+      <ion-select-option value="whichTissue">Which Tissue</ion-select-option>
+      <ion-select-option value="whichStructure">Which Structure</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Content -->
+  <ion-item>
+    <ion-input
+      label="Content"
+      labelPlacement="floating"
+      placeholder="Enter content"
+      [(ngModel)]="post.content"
+      >
+    </ion-input>
+  </ion-item>
+
+  <!-- Image Upload -->
+  <ion-item lines="none">
+    <ion-label position="stacked">Upload Images</ion-label>
+    <input type="file" multiple accept="image/*" />
+  </ion-item>
+
+  <!-- Subjects -->
+  <ion-item>
+    <ion-input
+      label="Subjects"
+      labelPlacement="floating"
+      placeholder="Comma-separated subjects">
+    </ion-input>
+  </ion-item>
+
+  <!-- Tags -->
+  <ion-item>
+    <ion-input
+      label="Tags"
+      labelPlacement="floating"
+      placeholder="Comma-separated tags">
+    </ion-input>
+  </ion-item>
+
+  <!-- Staining Methods -->
+  <ion-item>
+    <ion-input
+      label="Staining Methods"
+      labelPlacement="floating"
+      placeholder="Comma-separated methods">
+    </ion-input>
+  </ion-item>
+
+ 
+
+  <ion-button expand="block" (click)="onSubmit()">
+    Submit Post
+  </ion-button>
+
 </ion-content>
