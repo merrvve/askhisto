@@ -35,13 +35,52 @@
   </ion-item>
 
   <!-- Subjects -->
+<ion-item lines="none">
+  <ion-label>Subjects</ion-label>
+</ion-item>
+
+@for (subject of presetSubjects; track subject) {
+  <ion-chip
+    outline
+    color="{{selectedSubjectsSet().has(subject) ? 'primary' : 'medium'}}"
+    (click)="togglePresetSubject(subject)"
+  >
+    <ion-label>{{ subject }}</ion-label>
+  </ion-chip>
+}
+
+@for (subject of allSelectedSubjects(); track subject) {
+  <ion-chip
+    outline
+    color="primary"
+    (click)="removeSubject(subject)"
+  >
+    <ion-label>{{ subject }}</ion-label>
+    <ion-icon name="close-circle" slot="end"></ion-icon>
+  </ion-chip>
+}
+
+<ion-button fill="clear" size="small" (click)="showMore.set(!showMore())">
+  @if (showMore()) {
+    Hide
+  } @else {
+    More
+  }
+</ion-button>
+
+@if (showMore()) {
   <ion-item>
     <ion-input
-      label="Subjects"
+      label="Add Subjects"
       labelPlacement="floating"
-      placeholder="Comma-separated subjects">
+      placeholder="Enter subjects separated by commas"
+      [value]="customSubjects()"
+      (input)="onInput($event)"
+    >
     </ion-input>
   </ion-item>
+}
+
 
   <!-- Tags -->
   <ion-item>
