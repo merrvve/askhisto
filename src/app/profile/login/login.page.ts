@@ -41,5 +41,7 @@ export class LoginPage  {
       alert(err.message);
     }
   }
-
+  register() {
+    this.router.navigate(['/register']);
+  }
 }

@@ -5,7 +5,7 @@
   </ion-content>
   
   <!-- Global Bottom Navigation -->
-  <ion-footer >
+  <ion-footer id="footer">
     <ion-tab-bar slot="bottom">
 
       <ion-tab-button (click)="navigate('home')">
@@ -20,10 +20,10 @@
 
       <ion-tab-button (click)="navigate('ask-question')">
         <ion-icon name="help-circle-outline"></ion-icon>
-        <ion-label>Ask Question</ion-label>
+        <ion-label>Create Post</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="navigate('forum-home')">
+      <ion-tab-button (click)="navigate('forum')">
         <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
         <ion-label>See Posts</ion-label>
       </ion-tab-button>

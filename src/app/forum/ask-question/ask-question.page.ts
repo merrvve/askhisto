@@ -1,121 +1,166 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonSelect, IonItem, IonLabel, IonButton, IonSelectOption, IonInput, IonChip, IonIcon } from '@ionic/angular/standalone';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { IonContent, IonHeader,IonSelectOption, IonSelect, IonItem, IonLabel, IonChip, IonIcon, IonButton, IonToolbar, IonTitle, IonInput, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonToast } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/models/User';
 import { Post } from 'src/app/models/Post';
+import { User } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-ask-question',
   templateUrl: './ask-question.page.html',
   styleUrls: ['./ask-question.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonChip, IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, FormsModule,
-    IonSelectOption, IonInput, IonSelect
+  imports: [IonToast, IonCardContent, IonCard, IonCol, IonRow, IonGrid, IonInput, IonButton, IonIcon, IonChip, IonLabel, IonItem, IonIcon, IonChip,  IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar,  FormsModule,
+    //IonSelectOption, 
+    IonInput, 
+    //IonSelect
   ]
 })
 export class AskQuestionPage implements OnInit {
   user: User | null = null;
   private authSub?: Subscription;
 
-  post: Post = {
+  post : Post = {
     type: 'whichTissue',
     content: '',
-    images: [],
-    subjects: [],
-    tags: [],
-    stainingMethods: [],
+    images: [] as string[],
+    subjects: [] as string[],
+    tags: [] as string[],
+    stainingMethods: [] as string[],
     addedBy: '',
-    addedDate: new Date().toISOString(),
+    addedDate: new Date().toDateString()
   };
 
-  // Preset subjects
-  presetSubjects = ['Anatomy', 'Physiology', 'Biochemistry'];
+  // UI state
+  showAdditionalFields = false;
+  toastMessage = "Loading..."
+  // Preset options
+  presetTags = ['Histology', 'Pathology', 'Embryology'];
+  presetStainingMethods = ['H&E', 'IHC', 'Masson Trichrome'];
 
-  // Signal holding subjects typed in input as a raw string
-  customSubjects = signal('');
+  // Temporary input values
+  newSubjectsInput = '';
+  newTagsInput = '';
+  newStainingMethodsInput = '';
+  // Subjects configuration
+  presetSubjects = ['Respiratory', 'Cardiovascular', 'Digestive'];
+  selectedSubjects: string[] = [];
+  customSubjectInput = '';
+  showMoreOptions = false;
 
-  // Signal toggling input visibility
-  showMore = signal(false);
-
-  // Signal holding all selected subjects as a Set (to avoid duplicates)
-  selectedSubjectsSet = signal(new Set<string>());
-
-  // Combine preset selected + custom input subjects as a computed array
-  allSelectedSubjects = computed(() => {
-    const set = new Set(this.selectedSubjectsSet());
-    
-    // Process custom subjects and add them to the set
-    this.processCustomSubjects().forEach(s => set.add(s));
-    
-    return Array.from(set);
-  });
-
+  
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) { }
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit() {
     this.authSub = this.authService.user$.subscribe(user => {
       this.user = user;
-      if (user) {
-        this.post.addedBy = user.uid;
+      if (user) this.post.addedBy = user.uid;
+      else {
+         this.router.navigate(['/login'])
       }
     });
   }
 
-  // Process custom subjects string into an array of trimmed, non-empty strings
-  private processCustomSubjects(): string[] {
-    return this.customSubjects()
+  // Toggle preset subject selection
+  togglePresetSubject(subject: string) {
+    const index = this.selectedSubjects.indexOf(subject);
+    if (index > -1) {
+      this.selectedSubjects.splice(index, 1);
+    } else {
+      this.selectedSubjects.push(subject);
+    }
+  }
+
+  toggleAdditionalFields() {
+    this.showAdditionalFields = !this.showAdditionalFields;
+  }
+  // Add custom subjects from input
+  addSubjects() {
+    const subjectsToAdd = this.newSubjectsInput
       .split(',')
       .map(s => s.trim())
       .filter(s => s.length > 0);
+
+    this.post.subjects = [...new Set([...this.post.subjects || [], ...subjectsToAdd])];
+    this.newSubjectsInput = '';
   }
 
-  // Handle input event for custom subjects
-  onInput(event: any) {
-    const value = event.detail?.value || event.target?.value;
-    this.customSubjects.set(value);
-  }
-
-  // Add custom subjects when the input loses focus or on enter key
-  addCustomSubjects() {
-    const subjectsToAdd = this.processCustomSubjects();
-    
-    if (subjectsToAdd.length > 0) {
-      const currentSet = new Set(this.selectedSubjectsSet());
-      subjectsToAdd.forEach(subject => currentSet.add(subject));
-      this.selectedSubjectsSet.set(currentSet);
-      this.customSubjects.set(''); // Clear input after adding
-    }
-  }
-
-  // Remove subject from either preset or custom
+  // Remove a subject
   removeSubject(subject: string) {
-    const currentSet = new Set(this.selectedSubjectsSet());
-    currentSet.delete(subject);
-    this.selectedSubjectsSet.set(currentSet);
-  }
-
-  // Toggle preset subject selection
-  togglePresetSubject(subject: string) {
-    const currentSet = new Set(this.selectedSubjectsSet());
-    if (currentSet.has(subject)) {
-      currentSet.delete(subject);
-    } else {
-      currentSet.add(subject);
-    }
-    this.selectedSubjectsSet.set(currentSet);
+    this.selectedSubjects = this.selectedSubjects.filter(s => s !== subject);
   }
 
   onSubmit() {
-    // Update post subjects before submission
-    this.post.subjects = this.allSelectedSubjects();
-    console.log('Submitted Post:', this.post);
-    // TODO: send to Firestore or backend
+    // Update post with selected subjects
+    this.post.subjects = [...this.selectedSubjects]; 
+    console.log('Submitting post:', this.post);
+    this.toastMessage = "Your post is submitted! "
+    this.router.navigate(['forum'])
+    // TODO: Implement actual submission
+  }
+  addTags() {
+    const tagsToAdd = this.newTagsInput
+      .split(',')
+      .map(t => t.trim())
+      .filter(t => t.length > 0);
+
+    this.post.tags = [...new Set([...this.post.tags || [], ...tagsToAdd])];
+    this.newTagsInput = '';
+  }
+
+  addStainingMethods() {
+    const methodsToAdd = this.newStainingMethodsInput
+      .split(',')
+      .map(m => m.trim())
+      .filter(m => m.length > 0);
+
+    this.post.stainingMethods = [...new Set([...this.post.stainingMethods || [], ...methodsToAdd])];
+    this.newStainingMethodsInput = '';
+  }
+
+  removeItem(array: string[], item: string) {
+    return array.filter(i => i !== item);
+  }
+
+  uploadedImages: {
+    file: File;
+    preview: SafeUrl;
+  }[] = [];
+
+  
+  onImageUpload(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      // Clear existing if you want to replace instead of add
+      // this.uploadedImages = []; 
+      
+      Array.from(input.files).forEach(file => {
+        if (file.type.match('image.*')) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.uploadedImages.push({
+              file,
+              preview: this.sanitizer.bypassSecurityTrustUrl(e.target.result)
+            });
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // Reset the input to allow selecting same files again
+      input.value = '';
+    }
+  }
+
+  removeImage(index: number) {
+    this.uploadedImages.splice(index, 1);
   }
 
   ngOnDestroy() {

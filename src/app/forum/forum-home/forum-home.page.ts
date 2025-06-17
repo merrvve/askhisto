@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle,IonThumbnail, IonToolbar, IonButton, Io
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/Post';
 import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
+import { PostService } from 'src/app/services/forum/post.service';
 
 @Component({
   selector: 'app-forum-home',
@@ -16,9 +17,10 @@ import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
 })
 export class ForumHomePage implements OnInit {
  posts$!: Observable<Post[]>;
-  constructor() { }
+  constructor(private postService: PostService) { }
 
   ngOnInit() {
+    this.posts$ = this.postService.getLatestPosts(10);
   }
 viewDetails(post: Post) {
     console.log('Post:', post);

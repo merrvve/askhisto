@@ -5,105 +5,143 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-
-  <!-- Type -->
-  <ion-item>
-    <ion-select
-      label="Type"
-      labelPlacement="floating"
-      placeholder="Select type">
-      <ion-select-option value="whichTissue">Which Tissue</ion-select-option>
-      <ion-select-option value="whichStructure">Which Structure</ion-select-option>
-    </ion-select>
-  </ion-item>
-
-  <!-- Content -->
-  <ion-item>
-    <ion-input
-      label="Content"
-      labelPlacement="floating"
-      placeholder="Enter content"
-      [(ngModel)]="post.content"
-      >
-    </ion-input>
-  </ion-item>
-
-  <!-- Image Upload -->
-  <ion-item lines="none">
-    <ion-label position="stacked">Upload Images</ion-label>
-    <input type="file" multiple accept="image/*" />
-  </ion-item>
-
-  <!-- Subjects -->
-<ion-item lines="none">
-  <ion-label>Subjects</ion-label>
+  <!-- Basic Fields (Always visible) -->
+  <!-- Image Upload Section -->
+<ion-item lines="none" >
+  <ion-label position="stacked" >Upload Images (Max 5)</ion-label>
+  <input 
+    type="file" 
+    multiple 
+    accept="image/*" 
+    (change)="onImageUpload($event)"
+    #fileInput
+    style="display: none"
+  >
+  <ion-button class="ion-padding-horizontal" fill="outline" (click)="fileInput.click()">
+    <ion-icon slot="start" name="cloud-upload"></ion-icon>
+    Select Images
+  </ion-button>
 </ion-item>
 
-@for (subject of presetSubjects; track subject) {
-  <ion-chip
-    outline
-    color="{{selectedSubjectsSet().has(subject) ? 'primary' : 'medium'}}"
-    (click)="togglePresetSubject(subject)"
-  >
-    <ion-label>{{ subject }}</ion-label>
-  </ion-chip>
-}
+<!-- Image Previews -->
+ @if(uploadedImages.length > 0) {
+  <ion-grid>
+  <ion-row>
+    @for (image of uploadedImages; track $index) {
+      <ion-col size="6" size-md="4" size-lg="3">
+        <ion-card>
+          <img [src]="image.preview" style="height: 100px; object-fit: cover"/>
+          <ion-card-content>
+            <ion-button 
+              expand="block" 
+              fill="clear" 
+              color="danger" 
+              size="small"
+              (click)="removeImage($index)"
+            >
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    }
+  </ion-row>
+</ion-grid>
+ }
 
-@for (subject of allSelectedSubjects(); track subject) {
-  <ion-chip
-    outline
-    color="primary"
-    (click)="removeSubject(subject)"
-  >
-    <ion-label>{{ subject }}</ion-label>
-    <ion-icon name="close-circle" slot="end"></ion-icon>
-  </ion-chip>
-}
 
-<ion-button fill="clear" size="small" (click)="showMore.set(!showMore())">
-  @if (showMore()) {
-    Hide
-  } @else {
-    More
-  }
-</ion-button>
-
-@if (showMore()) {
   <ion-item>
     <ion-input
-      label="Add Subjects"
-      labelPlacement="floating"
-      placeholder="Enter subjects separated by commas"
-      [value]="customSubjects()"
-      (input)="onInput($event)"
-    >
-    </ion-input>
-  </ion-item>
-}
-
-
-  <!-- Tags -->
-  <ion-item>
-    <ion-input
-      label="Tags"
-      labelPlacement="floating"
-      placeholder="Comma-separated tags">
+    labelPlacement="floating"
+      label="Content"
+      [(ngModel)]="post.content"
+      placeholder="Enter your question...">
     </ion-input>
   </ion-item>
 
-  <!-- Staining Methods -->
-  <ion-item>
-    <ion-input
-      label="Staining Methods"
-      labelPlacement="floating"
-      placeholder="Comma-separated methods">
-    </ion-input>
-  </ion-item>
-
- 
-
-  <ion-button expand="block" (click)="onSubmit()">
-    Submit Post
+  <!-- More Button -->
+  <ion-button 
+    fill="clear" 
+    size="small" 
+    (click)="toggleAdditionalFields()">
+    {{ showAdditionalFields ? 'Hide Additional Fields' : 'Show Additional Fields' }}
   </ion-button>
 
+  <!-- Additional Fields (Shown when expanded) -->
+  @if (showAdditionalFields) {
+    <!-- Subjects -->
+    <ion-item>
+      <ion-input
+      labelPlacement="floating"
+        label="Add Subjects"
+        [(ngModel)]="newSubjectsInput"
+        placeholder="Comma separated subjects"
+        (keyup.enter)="addSubjects()">
+      </ion-input>
+      <ion-button slot="end" (click)="addSubjects()">Add</ion-button>
+    </ion-item>
+
+    <div class="chips-container">
+      @for (subject of post.subjects; track subject) {
+        <ion-chip (click)="post.subjects = removeItem(post.subjects || [], subject)">
+          <ion-label>{{ subject }}</ion-label>
+          <ion-icon name="close"></ion-icon>
+        </ion-chip>
+      }
+    </div>
+
+    <!-- Tags -->
+    <ion-item>
+      <ion-input
+      labelPlacement="floating"
+        label="Add Tags"
+        [(ngModel)]="newTagsInput"
+        placeholder="Comma separated tags"
+        (keyup.enter)="addTags()">
+      </ion-input>
+      <ion-button slot="end" (click)="addTags()">Add</ion-button>
+    </ion-item>
+
+    <div class="chips-container">
+      @for (tag of post.tags; track tag) {
+        <ion-chip (click)="post.tags = removeItem(post.tags || [], tag)">
+          <ion-label>{{ tag }}</ion-label>
+          <ion-icon name="close"></ion-icon>
+        </ion-chip>
+      }
+    </div>
+
+    <!-- Staining Methods -->
+    <ion-item>
+      <ion-input
+      labelPlacement="floating"
+        label="Add Staining Methods"
+        [(ngModel)]="newStainingMethodsInput"
+        placeholder="Comma separated methods"
+        (keyup.enter)="addStainingMethods()">
+      </ion-input>
+      <ion-button slot="end" (click)="addStainingMethods()">Add</ion-button>
+    </ion-item>
+
+    <div class="chips-container">
+      @for (method of post.stainingMethods; track method) {
+        <ion-chip (click)="post.stainingMethods = removeItem(post.stainingMethods || [], method)">
+          <ion-label>{{ method }}</ion-label>
+          <ion-icon name="close"></ion-icon>
+        </ion-chip>
+      }
+    </div>
+  }
+
+  <ion-toast
+    trigger="footerAnchor"
+    position="bottom"
+    positionAnchor="footer"
+    [message]="toastMessage"
+    duration="2000"
+  ></ion-toast>
+  <!-- Submit Button -->
+  <ion-button id="footerAnchor" expand="block" (click)="onSubmit()">
+    Submit Post
+  </ion-button>
 </ion-content>

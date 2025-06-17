@@ -43,7 +43,7 @@ export const routes: Routes = [
     loadComponent: () => import('./forum/ask-question/ask-question.page').then( m => m.AskQuestionPage)
   },
   {
-    path: 'forum-home',
+    path: 'forum',
     loadComponent: () => import('./forum/forum-home/forum-home.page').then( m => m.ForumHomePage)
   },
   {
