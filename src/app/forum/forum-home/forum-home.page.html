@@ -10,47 +10,86 @@
     <ion-card-title>Latest Posts</ion-card-title>
     <ion-card-subtitle>5 Since Last Visit</ion-card-subtitle>
   </ion-card-header>
-<ion-card-content>
- <ion-list>
-  @if (posts$ | async; as posts) {
-    @for (post of posts; track post.id) {
-      <ion-item>
-        <!-- Make image wider -->
-        <ion-thumbnail slot="start" style="width: 100px; height: 100px;">
-          <img [src]="post.images[0] || 'assets/placeholder.jpg'" alt="Post Image" />
-        </ion-thumbnail>
-
-        <ion-label>
-          {{ post.content | truncate : 100 }}
-        </ion-label>
-      </ion-item>
-
-      <div class="ion-text-end ion-padding-horizontal">
-        <ion-button fill="clear" size="small" (click)="viewDetails(post)">
-          See Details
+  
+  <ion-card-content>
+    @if (posts$ | async; as posts) {
+      <ion-list lines="none">
+        @for (post of posts; track post.id) {
+          <ion-card class="post-card" (click)="viewDetails(post)">
+            <!-- Post Image -->
+            <div class="post-image-container">
+              <img [src]="post.images[0] || 'assets/placeholder.webp'" class="post-image" />
+            </div>
+            
+            <!-- Post Content -->
+            <ion-card-content>
+              <div class="post-content">
+                <p class="post-text">{{ post.content | truncate:100 }}</p>
+                
+                <!-- Metadata Row -->
+               
+                <div class="metadata-row">
+                  <ion-chip color="medium" [disabled]="true">
+                    <ion-avatar>
+    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+  </ion-avatar>
+                    <ion-label>{{ post.addedBy }}</ion-label>
+                  </ion-chip>
+                  
+                  <ion-chip color="medium" [disabled]="true">
+                    <ion-icon name="calendar"></ion-icon>
+                    <ion-label>{{ post.addedDate | firebaseDate:'shortDate' }}</ion-label>
+                  </ion-chip>
+                </div>
+                
+                <!-- Categories Chips -->
+                <div class="categories-row">
+                  @if (post.subjects?.length) {
+                    @for (subject of post.subjects?.slice(0, 5); track subject) {
+                      <ion-chip color="primary" outline>
+                        <ion-label>{{ subject }}</ion-label>
+                      </ion-chip>
+                    }
+                  }
+                  
+                  @if (post.tags?.length) {
+                    @for (tag of post.tags?.slice(0, 5); track tag) {
+                      <ion-chip color="success" outline>
+                        <ion-label># {{ tag }}</ion-label>
+                      </ion-chip>
+                    }
+                  }
+                  
+                  @if (post.stainingMethods?.length) {
+                    @for (method of post.stainingMethods?.slice(0, 5); track method) {
+                      <ion-chip color="warning" outline>
+                        <ion-label>{{ method }}</ion-label>
+                      </ion-chip>
+                    }
+                  }
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        }
+      </ion-list>
+      
+      <!-- View All Button -->
+      <div class="ion-text-center ion-margin-top">
+        <ion-button fill="outline" (click)="viewAllPosts()">
+          View All Posts
           <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
         </ion-button>
       </div>
+      
+    } @else {
+      <ion-item>
+        <ion-spinner slot="start"></ion-spinner>
+        <ion-label>Loading posts...</ion-label>
+      </ion-item>
     }
-
-    <!-- All posts button -->
-    <div class="ion-text-end ion-padding-horizontal ion-margin-top">
-      <ion-button (click)="viewAllPosts()">
-        Categories
-        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
-      </ion-button>
-    </div>
-
-  } @else {
-    <ion-item>
-      <ion-label>Loading...</ion-label>
-    </ion-item>
-  }
-</ion-list>
-
-</ion-card-content>  
+  </ion-card-content>
 </ion-card>
-
   
 
 </ion-content>

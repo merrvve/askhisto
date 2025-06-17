@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface Post {
   id?: string; // Optional Firebase document ID
   type: 'whichTissue' | 'whichStructure' | string;
@@ -7,5 +9,5 @@ export interface Post {
   tags?: string[];
   stainingMethods?: string[]; // e.g., ['H&E', 'Gram']
   addedBy: string; // User ID or name
-  addedDate: Date | string; // Firestore Timestamp or ISO date
+  addedDate: Date | Timestamp; // Firestore Timestamp or ISO date
 }

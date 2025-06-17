@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { Post } from 'src/app/models/Post';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { PostService } from 'src/app/services/forum/post.service';
 
 @Component({
   selector: 'app-ask-question',
@@ -31,7 +32,7 @@ export class AskQuestionPage implements OnInit {
     tags: [] as string[],
     stainingMethods: [] as string[],
     addedBy: '',
-    addedDate: new Date().toDateString()
+    addedDate: new Date()
   };
 
   // UI state
@@ -50,12 +51,13 @@ export class AskQuestionPage implements OnInit {
   selectedSubjects: string[] = [];
   customSubjectInput = '';
   showMoreOptions = false;
-
+  isSubmitting = false;
   
   constructor(
     private authService: AuthService,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private postService: PostService
   ) {}
 
   ngOnInit() {
@@ -97,14 +99,54 @@ export class AskQuestionPage implements OnInit {
     this.selectedSubjects = this.selectedSubjects.filter(s => s !== subject);
   }
 
-  onSubmit() {
-    // Update post with selected subjects
+  // onSubmit() {
+  //   // Update post with selected subjects
+  //   this.post.subjects = [...this.selectedSubjects]; 
+  //   console.log('Submitting post:', this.post);
+  //   this.postService.addPost(this.post);
+  //   this.toastMessage = "Your post is submitted! "
+  //   this.router.navigate(['forum'])
+  //   // TODO: Implement actual submission
+  // }
+
+  async onSubmit() {
+    if (this.isSubmitting) return;
     this.post.subjects = [...this.selectedSubjects]; 
     console.log('Submitting post:', this.post);
-    this.toastMessage = "Your post is submitted! "
-    this.router.navigate(['forum'])
-    // TODO: Implement actual submission
+    this.isSubmitting = true;
+    
+    try {
+      await this.postService.addPost(this.post);
+      console.log('Post submitted successfully!');
+      this.toastMessage = "Your post is submitted! "
+    
+      this.resetForm();
+      
+      // Optional: Navigate away
+      await this.router.navigate(['/forum']);
+    } catch (error) {
+      this.toastMessage = 'Error submitting post' + error; 
+      // Optional: Show error toast
+      // this.showErrorToast();
+    } finally {
+      this.isSubmitting = false;
+    }
   }
+
+  private resetForm() {
+    this.post = {
+      type: 'whichTissue',
+      content: '',
+      images: [],
+      subjects: [],
+      tags: [],
+      stainingMethods: [],
+      addedBy: this.user?.displayName || '',
+      addedDate: new Date()
+    };
+  }
+
+  
   addTags() {
     const tagsToAdd = this.newTagsInput
       .split(',')
