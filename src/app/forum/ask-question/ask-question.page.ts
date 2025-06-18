@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { IonContent, IonHeader,IonSelectOption, IonSelect, IonItem, IonLabel, IonChip, IonIcon, IonButton, IonToolbar, IonTitle, IonInput, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonToast } from '@ionic/angular/standalone';
+import { IonContent, IonHeader,IonSelectOption, IonSelect, IonItem, IonLabel, IonChip, IonIcon, IonButton, IonToolbar, IonTitle, IonInput, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonToast, IonCardHeader } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/models/Post';
 import { User } from 'src/app/models/User';
@@ -14,7 +14,7 @@ import { PostService } from 'src/app/services/forum/post.service';
   templateUrl: './ask-question.page.html',
   styleUrls: ['./ask-question.page.scss'],
   standalone: true,
-  imports: [IonToast, IonCardContent, IonCard, IonCol, IonRow, IonGrid, IonInput, IonButton, IonIcon, IonChip, IonLabel, IonItem, IonIcon, IonChip,  IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar,  FormsModule,
+  imports: [ IonToast, IonCardContent, IonCard, IonCol, IonRow, IonGrid, IonInput, IonButton, IonIcon, IonChip, IonLabel, IonItem, IonIcon, IonChip,  IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar,  FormsModule,
     //IonSelectOption, 
     IonInput, 
     //IonSelect
