@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonItem, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle,IonInput, IonToolbar, IonButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonItem, IonIcon, IonToast } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { Router } from '@angular/router';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonItem, FormsModule,
-    IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonLabel, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonToast, IonIcon, IonItem, FormsModule,
+    IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader,
+     IonCard, IonLabel, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
+    IonInput]
 })
 export class RegisterPage implements OnInit {
 
@@ -34,12 +36,37 @@ export class RegisterPage implements OnInit {
     this.router.navigate(['/profile']);
   }).catch(error => {
     console.error('Google sign-in failed:', error);
-  }).finally(() => {
-    this.router.navigate(['/profile']);
   });
 }
 
-  registerWithEmail() {}
+  registerWithEmail() {
+    this.statusMessage = "Signing in...";
+    if(!this.email) {
+      this.statusMessage += " Please enter a valid email address.\n"
+      return;
+    }
+    if(!this.password) {
+      this.statusMessage += " Please enter a password.\n"
+      return;
+    }
+    if(!this.confirmPassword) {
+      this.statusMessage += " Please confirm your password.\n"
+      return;
+    }
+    if(this.password != this.confirmPassword) {
+      this.statusMessage += " Passwords are not matched.\n"
+      return;
+    }
+
+    this.authService.signUp(this.email,this.password).then(() => {
+      this.statusMessage = "Success!"
+    this.router.navigate(['/profile']);
+  }).catch(error => {
+    this.statusMessage = 'Sign-in failed: '+ error;
+  });
+
+
+  }
   goToLogin() {
     this.router.navigate(['/login']);
   }

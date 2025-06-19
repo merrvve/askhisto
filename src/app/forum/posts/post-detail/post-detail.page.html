@@ -1,0 +1,227 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>POST DETAIL</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+
+
+  @if (post) {
+
+  <ion-card class="post-card">
+    <!-- Post Image -->
+    <div class="post-image-container">
+      @if (post.images && post.images.length > 1) {
+      <swiper-container #swiper [slidesPerView]="1" [spaceBetween]="0" [centeredSlides]="true"
+        class="post-image-slider">
+
+        @for (image of post.images; track image) {
+        <swiper-slide>
+          <img [src]="image || 'assets/placeholder.webp'" class="post-image" />
+        </swiper-slide>
+        }
+      </swiper-container>
+      <ion-row class="ion-justify-content-center ion-align-items-center ion-padding swipe-hint">
+        <ion-icon name="arrow-back" class="swipe-icon"></ion-icon>
+        <ion-icon name="arrow-forward" class="swipe-icon"></ion-icon>
+      </ion-row>
+      } @else {
+      <img [src]="post.images[0] || 'assets/placeholder.webp'" class="post-image" />
+      }
+    </div>
+
+    <!-- Post Content -->
+    <ion-card-content>
+      <div class="post-content">
+        <p class="post-text">{{ post.content }}</p>
+
+        <!-- Metadata Row -->
+
+        <div class="metadata-row">
+          <ion-chip color="medium" [disabled]="true">
+            <ion-avatar>
+              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>{{ post.addedBy }}</ion-label>
+          </ion-chip>
+
+          <ion-chip color="medium" [disabled]="true">
+            <ion-icon name="calendar"></ion-icon>
+            <ion-label>{{ post.addedDate | firebaseDate:'shortDate' }}</ion-label>
+          </ion-chip>
+        </div>
+
+        <!-- Categories Chips -->
+        <div class="categories-row">
+          @if (post.subjects?.length) {
+          @for (subject of post.subjects?.slice(0, 5); track subject) {
+          <ion-chip color="primary" outline>
+            <ion-label>{{ subject }}</ion-label>
+          </ion-chip>
+          }
+          }
+
+          @if (post.tags?.length) {
+          @for (tag of post.tags?.slice(0, 5); track tag) {
+          <ion-chip color="success" outline>
+            <ion-label># {{ tag }}</ion-label>
+          </ion-chip>
+          }
+          }
+
+          @if (post.stainingMethods?.length) {
+          @for (method of post.stainingMethods?.slice(0, 5); track method) {
+          <ion-chip color="warning" outline>
+            <ion-label>{{ method }}</ion-label>
+          </ion-chip>
+          }
+          }
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  }
+
+
+  @else {
+  @if (post$ | async; as post) {
+
+  <ion-card class="post-card">
+    <!-- Post Image -->
+    <div class="post-image-container">
+      @if (post.images && post.images.length > 1) {
+      <swiper-container #swiper [slidesPerView]="1" [spaceBetween]="0" [centeredSlides]="true"
+        class="post-image-slider">
+
+        @for (image of post.images; track image) {
+        <swiper-slide>
+          <img [src]="image || 'assets/placeholder.webp'" class="post-image" />
+        </swiper-slide>
+        }
+      </swiper-container>
+      <ion-row class="ion-justify-content-center ion-align-items-center ion-padding swipe-hint">
+        <ion-icon name="arrow-back" class="swipe-icon"></ion-icon>
+        <ion-icon name="arrow-forward" class="swipe-icon"></ion-icon>
+      </ion-row>
+
+      } @else {
+      <img [src]="post.images[0] || 'assets/placeholder.webp'" class="post-image" />
+      }
+    </div>
+
+    <!-- Post Content -->
+    <ion-card-content>
+      <div class="post-content">
+        <p class="post-text">{{ post.content }}</p>
+
+        <!-- Metadata Row -->
+
+        <div class="metadata-row">
+          <ion-chip color="medium" [disabled]="true">
+            <ion-avatar>
+              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>{{ post.addedBy }}</ion-label>
+          </ion-chip>
+
+          <ion-chip color="medium" [disabled]="true">
+            <ion-icon name="calendar"></ion-icon>
+            <ion-label>{{ post.addedDate | firebaseDate:'shortDate' }}</ion-label>
+          </ion-chip>
+        </div>
+
+        <!-- Categories Chips -->
+        <div class="categories-row">
+          @if (post.subjects?.length) {
+          @for (subject of post.subjects?.slice(0, 5); track subject) {
+          <ion-chip color="primary" outline>
+            <ion-label>{{ subject }}</ion-label>
+          </ion-chip>
+          }
+          }
+
+          @if (post.tags?.length) {
+          @for (tag of post.tags?.slice(0, 5); track tag) {
+          <ion-chip color="success" outline>
+            <ion-label># {{ tag }}</ion-label>
+          </ion-chip>
+          }
+          }
+
+          @if (post.stainingMethods?.length) {
+          @for (method of post.stainingMethods?.slice(0, 5); track method) {
+          <ion-chip color="warning" outline>
+            <ion-label>{{ method }}</ion-label>
+          </ion-chip>
+          }
+          }
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  }
+  @else {
+  <ion-item>
+    <ion-spinner slot="start"></ion-spinner>
+    <ion-label>Loading the post...</ion-label>
+  </ion-item>
+  }
+
+  }
+
+  <ion-card>
+    @if (comments$ | async; as comments) {
+    <ion-card-header>
+      <ion-card-title>Comments</ion-card-title>
+      <ion-card-subtitle>{{comments?.length || 0 }} Total</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      @for(comment of comments; track comment.id) {
+      <ion-card class="post-card">
+        <!-- Post Image -->
+
+
+        <!-- Post Content -->
+        <ion-card-content>
+          <div class="post-content">
+            <p class="post-text">{{ comment.content }}</p>
+
+            <!-- Metadata Row -->
+
+            <div class="metadata-row">
+              <ion-chip color="medium" [disabled]="true">
+                <ion-avatar>
+                  <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                </ion-avatar>
+                <ion-label>{{ comment.authorName }}</ion-label>
+              </ion-chip>
+
+              <ion-chip color="medium" [disabled]="true">
+                <ion-icon name="calendar"></ion-icon>
+                <ion-label>{{ comment.createdAt| firebaseDate:'shortDate' }}</ion-label>
+              </ion-chip>
+            </div>
+
+
+          </div>
+        </ion-card-content>
+      </ion-card>
+      }
+    </ion-card-content>
+    }
+
+
+    @else {
+    <ion-card-content>
+      <ion-item>
+
+        <ion-label>No comments.</ion-label>
+      </ion-item>
+    </ion-card-content>
+    }
+
+  </ion-card>
+
+</ion-content>

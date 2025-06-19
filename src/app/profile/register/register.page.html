@@ -14,7 +14,7 @@
 
     <ion-card-content>
 
-      
+      <form>      
         <ion-item>
           <ion-input
             labelPlacement="floating"
@@ -63,7 +63,7 @@
           </ion-input>
         </ion-item>
 
-        <ion-button expand="block" type="submit" (click)="registerWithEmail()">
+        <ion-button id="registerAnchor" expand="block" type="submit" (click)="registerWithEmail()" >
           <ion-icon name="person-add-outline" slot="start"></ion-icon>
           Register
         </ion-button>
@@ -81,7 +81,14 @@
       <ion-button fill="clear" (click)="goToLogin()" class="ion-margin-top">
         Already have an account? Login
       </ion-button>
-
+</form>
     </ion-card-content>
   </ion-card>
+  <ion-toast
+    trigger="registerAnchor"
+    position="bottom"
+    positionAnchor="footer"
+    [message]="statusMessage"
+    duration="2000"
+  ></ion-toast>
 </ion-content>

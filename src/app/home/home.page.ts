@@ -41,8 +41,8 @@ export class HomePage {
   }
 
   viewDetails(post: Post) {
-    console.log('Post:', post);
-    // TODO: Add navigation to details page here
+    this.postService.currentPost = post;
+    this.router.navigate([`/post/${post.id}`]);
   }
 
   viewAllPosts() {

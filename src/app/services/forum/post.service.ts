@@ -12,6 +12,7 @@ export class PostService {
  
   private firestore: Firestore = inject(Firestore);
   private postsCollection = collection(this.firestore, 'posts');
+  public currentPost?: Post;
 
   constructor() {}
 
@@ -62,4 +63,13 @@ export class PostService {
   );
   return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
 }
+
+  getCurrentPostMatchId(id: string): Post | null {
+    if(this.currentPost && this.currentPost.id === id) {
+      return this.currentPost;
+    }
+    else {
+      return null;
+    }
+  }
 }
