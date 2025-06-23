@@ -8,6 +8,7 @@ import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
 import { PostService } from 'src/app/services/forum/post.service';
 import { FirebaseDatePipe } from 'src/app/pipes/firebase-date.pipe';
 import { Router } from '@angular/router';
+import { ToolbarComponent } from "../../ui/toolbar/toolbar.component";
 
 @Component({
   selector: 'app-forum-home',
@@ -17,7 +18,7 @@ import { Router } from '@angular/router';
   imports: [IonInfiniteScrollContent, IonInfiniteScroll, IonRow, IonAvatar, IonSpinner, IonChip, IonLabel, IonItem, IonList, TruncatePipe,
     // IonThumbnail,
     FirebaseDatePipe,
-    IonCardContent,  IonIcon, IonCard, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+    IonCardContent, IonIcon, IonCard, IonButton, IonContent, CommonModule, FormsModule, ToolbarComponent]
 })
 export class ForumHomePage implements OnInit {
   posts$ = new BehaviorSubject<Post[]>([]);

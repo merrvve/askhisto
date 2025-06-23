@@ -1,13 +1,37 @@
-[
+ {
+    "dig0001": 
   {
     "type": "whichTissue",
-    "images": ["dig0001", "dig0002"],
-    "choices": ["Kidney - PAS & Hemaluan", "Liver - H&E", "Liver -Masson Trichrome", "Kidney - H&E"],
+    "images": ["https://askhisto.b-cdn.net/dig0001.jpg", "https://askhisto.b-cdn.net/dig0002.jpg"],
+    "choices": ["Kidney - PAS & Hemalaun", "Liver - H&E", "Liver -Masson Trichrome", "Kidney - H&E"],
     "rightChoice": 1,
     "subjects": ["Digestive"],
     "tags": ["liver", "human liver"],
     "stainingMethods": ["H&E"],
     "addedBy": "admin",
     "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "lymph0001": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/lymph0001.jpg", "https://askhisto.b-cdn.net/lymph0004.jpg", "https://askhisto.b-cdn.net/lymph0005.jpg"],
+    "choices": ["Timus - Hemalaun & Safranin", "Spleen - H&E", "Tonsilla Palatina - Hemalaun & Safranin", "Spleen - Hemalaun & Safranin"],
+    "rightChoice": 3,
+    "subjects": ["Lymphoid"],
+    "tags": ["spleeen"],
+    "stainingMethods": ["Hemalaun","Safranin"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "nerve0001": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/nerve0001.jpg", "https://askhisto.b-cdn.net/nerve0002.jpg"],
+    "choices": ["Cerebrum - Crystal Violet", "Medulla Spinalis - Crystal Violet", "Medulla Spinalis - Hemalaun", "Cerebellum - Crystal Violet"],
+    "rightChoice": 1,
+    "subjects": ["Nervous"],
+    "tags": ["medulla spinalis", "nervous tissue"],
+    "stainingMethods": ["Crystal Violet"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
   }
-]
+
+  }

@@ -11,6 +11,7 @@ import { PostService } from 'src/app/services/forum/post.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { register } from 'swiper/element/bundle';
 import { Swiper } from 'swiper/types';
+import { ToolbarComponent } from 'src/app/ui/toolbar/toolbar.component';
 
 // Register Swiper custom elements
 register();
@@ -27,7 +28,8 @@ export interface SwiperSlideChangeEvent {
   standalone: true,
   imports: [IonItem, IonSpinner, IonLabel, IonAvatar, IonChip, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonIcon, 
     FirebaseDatePipe, 
-    IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule],
+    IonContent,CommonModule, FormsModule,
+  ToolbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class PostDetailPage implements OnInit {

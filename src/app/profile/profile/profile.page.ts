@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User';
+import { ToolbarComponent } from "../../ui/toolbar/toolbar.component";
 
 
 @Component({
@@ -13,11 +14,10 @@ import { User } from 'src/app/models/User';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
+  imports: [IonCardHeader, IonCard, IonContent, CommonModule, FormsModule,
     IonButton,
-     //IonNote, IonLabel, IonItem, IonList, 
-     IonCardContent, IonCardSubtitle,IonCardTitle, IonAvatar, IonIcon
-  ]
+    //IonNote, IonLabel, IonItem, IonList, 
+    IonCardContent, IonCardSubtitle, IonCardTitle, IonAvatar, IonIcon, ToolbarComponent]
 })
 export class ProfilePage implements OnInit {
 

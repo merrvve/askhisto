@@ -6,15 +6,15 @@ import {  IonCardTitle, IonCardSubtitle, IonCardContent, IonItem, IonLabel, IonI
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { ToolbarComponent } from "../../ui/toolbar/toolbar.component";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
-    IonCardTitle, IonCardSubtitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton
-  ]
+  imports: [IonIcon, IonCardHeader, IonCard, IonContent,  CommonModule, FormsModule,
+    IonCardTitle, IonCardSubtitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, ToolbarComponent]
 })
 export class LoginPage  {
   email: string = '';

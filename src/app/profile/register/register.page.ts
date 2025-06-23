@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle,IonInput, IonToolbar, IonButton, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonItem, IonIcon, IonToast } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { ToolbarComponent } from "../../ui/toolbar/toolbar.component";
 
 @Component({
   selector: 'app-register',
@@ -12,8 +13,8 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [IonToast, IonIcon, IonItem, FormsModule,
     IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader,
-     IonCard, IonLabel, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
-    IonInput]
+    IonCard, IonLabel, IonButton, IonContent, CommonModule, FormsModule,
+    IonInput, ToolbarComponent]
 })
 export class RegisterPage implements OnInit {
 

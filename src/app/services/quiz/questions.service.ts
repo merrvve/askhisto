@@ -42,20 +42,23 @@ export class QuestionService {
   }
 
   getQuestionsByQuizSetting(settings: QuizSetting): Observable<Question[]> {
-    let constraints: any[] = [];
+  let constraints: any[] = [];
 
-    if (settings.subjects?.length) {
-      constraints.push(where('subjects', 'array-contains-any', settings.subjects));
-    }
+  const useSubjectFilter = settings.subjects?.length && !(settings.subjects.length === 1 && settings.subjects[0] === 'ALL');
 
-    if (settings.randomize) {
-      constraints.push(orderBy('addedDate')); // you can order by date if you want pseudo-random
-    }
-
-    constraints.push(limit(settings.numberOfQuestions));
-
-    const q = query(this.questionCollection, ...constraints);
-
-    return collectionData(q, { idField: 'id' }) as Observable<Question[]>;
+  if (useSubjectFilter) {
+    constraints.push(where('subjects', 'array-contains-any', settings.subjects));
   }
+
+  if (settings.randomize) {
+    constraints.push(orderBy('addedDate')); // pseudo-random by date
+  }
+
+  constraints.push(limit(settings.numberOfQuestions));
+
+  const q = query(this.questionCollection, ...constraints);
+
+  return collectionData(q, { idField: 'id' }) as Observable<Question[]>;
+}
+
 }

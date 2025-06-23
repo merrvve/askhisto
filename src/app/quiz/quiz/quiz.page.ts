@@ -9,6 +9,8 @@ import { QuizSetting } from 'src/app/models/QuizSetting';
 import { Swiper } from 'swiper/types';
 import { register } from 'swiper/element';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { shuffleArray } from 'src/helpers/shuffle-array';
+import { ToolbarComponent } from 'src/app/ui/toolbar/toolbar.component';
 
 // Register Swiper custom elements
 register();
@@ -23,8 +25,9 @@ export interface SwiperSlideChangeEvent {
   templateUrl: './quiz.page.html',
   styleUrls: ['./quiz.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonCard,IonButton, IonText, IonCardContent, IonRow,
-    IonGrid, IonCol
+  imports: [IonContent, CommonModule, FormsModule, IonCard,IonButton, IonText, IonCardContent, IonRow,
+    IonGrid, IonCol,
+    ToolbarComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -40,17 +43,17 @@ export class QuizPage implements OnInit {
 
   ngOnInit(): void {
     const settings: QuizSetting = {
-      subjects: ['Connective Tissue'],
-      stainingMethods: ['H&E'],
-      tags: ['muscle'],
+      subjects: ['ALL'],
+      stainingMethods: ['ALL'],
+      tags: ['ALL'],
       questionType: 'whichTissue',
-      numberOfQuestions: 5,
-      randomize: false
+      numberOfQuestions: 10,
+      randomize: true
     };
 
     this.questionService.getQuestionsByQuizSetting(settings).subscribe(qs => {
-      this.questions = qs;
-      console.log(qs);
+      this.questions = shuffleArray(qs);
+      console.log(this.questions);
     });
   }
 

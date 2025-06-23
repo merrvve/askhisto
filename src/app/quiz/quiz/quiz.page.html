@@ -1,9 +1,6 @@
+<app-toolbar [title]="isComplete? 'Quiz' : 'Quiz - Question ' + currentIndex+1"></app-toolbar>
+
 @if(isComplete) {
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Quiz Complete</ion-title>
-  </ion-toolbar>
-</ion-header>
 <ion-content class="ion-text-center ion-padding" fullscreen>
   <div class="center-content">
     <ion-grid>
@@ -30,11 +27,7 @@
 
 }
 @else {
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Question {{ currentIndex + 1 }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+
 @if(questions) {
 <ion-content class="ion-padding">
 
@@ -59,7 +52,7 @@
         <ion-icon name="arrow-forward" class="swipe-icon"></ion-icon>
       </ion-row>
       } @else {
-      <img [src]="questions[currentIndex].images[0]" class="post-image" />
+      <img [src]="questions[currentIndex].images[0] || ''" class="post-image" />
       }
     </div>
 

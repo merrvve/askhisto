@@ -17,6 +17,9 @@ log.txt
 /.versions
 /coverage
 
+questions.json
+serviceAccountKey.json
+upload-questions.js
 # Ionic
 /.ionic
 /www

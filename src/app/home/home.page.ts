@@ -8,17 +8,17 @@ import { Post } from '../models/Post';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { TruncatePipe } from '../pipes/truncate.pipe';
 import { FirebaseDatePipe } from '../pipes/firebase-date.pipe';
+import { ToolbarComponent } from "../ui/toolbar/toolbar.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonAvatar, IonChip, 
+  imports: [IonAvatar, IonChip,
     //IonRow, 
     IonLabel, IonIcon, IonItem, IonList,
-     IonTitle, IonToolbar, IonHeader, 
-     IonCardContent,IonThumbnail, IonCardSubtitle, IonCardTitle, IonCardHeader,  IonCard,  IonButton, IonCard, IonContent,
-    AsyncPipe, TruncatePipe, FirebaseDatePipe],
+    IonCardContent, IonThumbnail, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonButton, IonCard, IonContent,
+    AsyncPipe, TruncatePipe, FirebaseDatePipe, ToolbarComponent],
 })
 export class HomePage {
   posts$!: Observable<Post[]>;
@@ -31,7 +31,7 @@ export class HomePage {
 
   startQuiz() {
     this.quizSetupService.reset(); // clear any previous settings
-    this.router.navigate(['/subject-select']);
+    this.router.navigate(['/quiz']);
   }
 
   

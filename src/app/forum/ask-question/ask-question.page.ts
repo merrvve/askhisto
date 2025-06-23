@@ -8,17 +8,16 @@ import { Post } from 'src/app/models/Post';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PostService } from 'src/app/services/forum/post.service';
+import { ToolbarComponent } from "../../ui/toolbar/toolbar.component";
 
 @Component({
   selector: 'app-ask-question',
   templateUrl: './ask-question.page.html',
   styleUrls: ['./ask-question.page.scss'],
   standalone: true,
-  imports: [ IonToast, IonCardContent, IonCard, IonCol, IonRow, IonGrid, IonInput, IonButton, IonIcon, IonChip, IonLabel, IonItem, IonIcon, IonChip,  IonButton, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar,  FormsModule,
+  imports: [IonToast, IonCardContent, IonCard, IonCol, IonRow, IonGrid, IonInput, IonButton, IonIcon, IonChip, IonLabel, IonItem, IonIcon, IonChip, IonButton, IonLabel, IonItem, IonContent,FormsModule,
     //IonSelectOption, 
-    IonInput, 
-    //IonSelect
-  ]
+    IonInput, ToolbarComponent]
 })
 export class AskQuestionPage implements OnInit {
   user: User | null = null;
