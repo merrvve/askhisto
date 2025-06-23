@@ -6,6 +6,17 @@ import { Question } from 'src/app/models/Question';
 import { Router } from '@angular/router';
 import { QuestionService } from 'src/app/services/quiz/questions.service';
 import { QuizSetting } from 'src/app/models/QuizSetting';
+import { Swiper } from 'swiper/types';
+import { register } from 'swiper/element';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+// Register Swiper custom elements
+register();
+export interface SwiperSlideChangeEvent {
+  swiper: Swiper;
+  activeIndex: number;
+  realIndex: number;
+}
 
 @Component({
   selector: 'app-quiz',
@@ -14,7 +25,8 @@ import { QuizSetting } from 'src/app/models/QuizSetting';
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonCard,IonButton, IonText, IonCardContent, IonRow,
     IonGrid, IonCol
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class QuizPage implements OnInit {
   selectedChoice?: number | null = null;

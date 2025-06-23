@@ -42,14 +42,37 @@
   <ion-card>
     <!-- Swipable images -->
 
-    @for (img of questions[currentIndex].images; track img) {
+    <!-- Post Image -->
+    <div class="post-image-container">
+      @if (questions[currentIndex].images && questions[currentIndex].images.length > 1) {
+      <swiper-container #swiper [slidesPerView]="1" [spaceBetween]="0" [centeredSlides]="true"
+        class="post-image-slider">
 
-    <img [src]="img" style="width: 100%; border-radius: 8px;" />
+        @for (image of questions[currentIndex].images; track image) {
+        <swiper-slide>
+          <img [src]="image" class="post-image" />
+        </swiper-slide>
+        }
+      </swiper-container>
+      <ion-row class="ion-justify-content-center ion-align-items-center ion-padding swipe-hint">
+        <ion-icon name="arrow-back" class="swipe-icon"></ion-icon>
+        <ion-icon name="arrow-forward" class="swipe-icon"></ion-icon>
+      </ion-row>
+      } @else {
+      <img [src]="questions[currentIndex].images[0]" class="post-image" />
+      }
+    </div>
 
-    }
 
 
     <ion-card-content class="ion-padding-top">
+      
+        @if (questions[currentIndex].type === "whichTissue" ) {
+          <p>
+            Please select the correct tissue and staining method for this preparation.
+          </p>
+        }
+
       <ion-grid>
         <ion-row>
           @for (choice of questions[currentIndex].choices; track choice; let i = $index) {

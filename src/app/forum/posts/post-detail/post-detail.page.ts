@@ -8,8 +8,6 @@ import { FirebaseDatePipe } from 'src/app/pipes/firebase-date.pipe';
 import { Comment } from 'src/app/models/Comment';
 import { Observable } from 'rxjs';
 import { PostService } from 'src/app/services/forum/post.service';
-import { ViewChild } from '@angular/core';
-import { SwiperContainer } from 'swiper/element';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { register } from 'swiper/element/bundle';
 import { Swiper } from 'swiper/types';
