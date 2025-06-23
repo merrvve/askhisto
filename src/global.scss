@@ -40,3 +40,18 @@
   *:not(ion-icon) {
     font-family: 'Varela Round', sans-serif!important;
   }
+
+
+/* global.scss */
+ion-app {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  ion-app {
+    width: 50%;
+    margin: 0 auto;
+  }
+}

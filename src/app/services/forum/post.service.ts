@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
-import { Timestamp, serverTimestamp } from 'firebase/firestore';
+import { Timestamp, serverTimestamp, startAfter } from 'firebase/firestore';
 import { Post } from 'src/app/models/Post';
 
 @Injectable({
@@ -55,14 +55,27 @@ export class PostService {
     return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
   }
 
-  getLatestPosts(limitCount: number = 5): Observable<Post[]> {
-  const q = query(
-    this.postsCollection,
-    orderBy('addedDate', 'desc'),
-    limit(limitCount)
-  );
+ getLatestPosts(limitCount: number = 5, lastDate?: any): Observable<Post[]> {
+  let q;
+
+  if (lastDate) {
+    q = query(
+      this.postsCollection,
+      orderBy('addedDate', 'desc'),
+      startAfter(lastDate),
+      limit(limitCount)
+    );
+  } else {
+    q = query(
+      this.postsCollection,
+      orderBy('addedDate', 'desc'),
+      limit(limitCount)
+    );
+  }
+
   return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
 }
+
 
   getCurrentPostMatchId(id: string): Post | null {
     if(this.currentPost && this.currentPost.id === id) {
