@@ -40,7 +40,7 @@
       @if (questions[currentIndex].images && questions[currentIndex].images.length > 1) {
 
       <swiper-container #swiper [slidesPerView]="1" [spaceBetween]="0" [centeredSlides]="true" class="post-image-slider"
-        [zoom]="true">
+        zoom="true">
 
         @for (image of displayedImages[currentIndex]; track image.url; let i = $index) {
         <swiper-slide [zoom]="true">

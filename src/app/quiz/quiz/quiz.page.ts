@@ -8,17 +8,8 @@ import {
   IonCol,
   IonContent,
   IonGrid,
-  IonHeader,
-  IonIcon,
-  IonicSlides,
-  IonItem,
-  IonItemSliding,
-  IonLabel,
-  IonList,
   IonRow,
   IonText,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 import { Question } from 'src/app/models/Question';
 import { Router } from '@angular/router';
@@ -29,8 +20,6 @@ import { register } from 'swiper/element';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { shuffleArray } from 'src/helpers/shuffle-array';
 import { ToolbarComponent } from 'src/app/ui/toolbar/toolbar.component';
-import 'swiper/css';
-import 'swiper/css/zoom';
 
 // Register Swiper custom elements
 register();
