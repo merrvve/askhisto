@@ -3,54 +3,27 @@
 <ion-content class="ion-padding">
   <!-- Basic Fields (Always visible) -->
   <!-- Image Upload Section -->
-<ion-item lines="none" >
-  <ion-label position="stacked" >Upload Images (Max 5)</ion-label>
-  <input 
-    type="file" 
-    multiple 
-    accept="image/*" 
-    (change)="onImageUpload($event)"
-    #fileInput
-    style="display: none"
-  >
-  <ion-button class="ion-padding-horizontal" fill="outline" (click)="fileInput.click()">
-    <ion-icon slot="start" name="cloud-upload"></ion-icon>
-    Select Images
-  </ion-button>
-</ion-item>
-
-<!-- Image Previews -->
- @if(uploadedImages.length > 0) {
-  <ion-grid>
-  <ion-row>
-    @for (image of uploadedImages; track $index) {
-      <ion-col size="6" size-md="4" size-lg="3">
-        <ion-card>
-          <img [src]="image.preview" style="height: 100px; object-fit: cover"/>
-          <ion-card-content>
-            <ion-button 
-              expand="block" 
-              fill="clear" 
-              color="danger" 
-              size="small"
-              (click)="removeImage($index)"
-            >
-              <ion-icon slot="icon-only" name="trash"></ion-icon>
-            </ion-button>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    }
-  </ion-row>
-</ion-grid>
- }
-
+   <uc-config
+      ctx-name="my-uploader"
+      pubkey="63bfc348b8d3624a0c85"
+      multiple
+      [multiple-min]="multipleMin"
+      [multiple-max]="multipleMax"
+      max-local-file-size-bytes="524288000"
+      img-only
+      group-output
+    ></uc-config>
+<form  #uploadForm="ngForm" (ngSubmit)="onSubmit($event)">
+ <uc-file-uploader-regular ctx-name="my-uploader">
+    <uc-form-input ctx-name="my-uploader"></uc-form-input>
+  </uc-file-uploader-regular>
 
   <ion-item>
     <ion-input
     labelPlacement="floating"
       label="Content"
       [(ngModel)]="post.content"
+      [ngModelOptions]="{standalone: true}"
       placeholder="Enter your question...">
     </ion-input>
   </ion-item>
@@ -71,6 +44,7 @@
       labelPlacement="floating"
         label="Add Subjects"
         [(ngModel)]="newSubjectsInput"
+        [ngModelOptions]="{standalone: true}"
         placeholder="Comma separated subjects"
         (keyup.enter)="addSubjects()">
       </ion-input>
@@ -92,6 +66,7 @@
       labelPlacement="floating"
         label="Add Tags"
         [(ngModel)]="newTagsInput"
+        [ngModelOptions]="{standalone: true}"
         placeholder="Comma separated tags"
         (keyup.enter)="addTags()">
       </ion-input>
@@ -113,6 +88,7 @@
       labelPlacement="floating"
         label="Add Staining Methods"
         [(ngModel)]="newStainingMethodsInput"
+        [ngModelOptions]="{standalone: true}"
         placeholder="Comma separated methods"
         (keyup.enter)="addStainingMethods()">
       </ion-input>
@@ -129,15 +105,17 @@
     </div>
   }
 
-  <ion-toast
+  
+  <!-- Submit Button -->
+  <ion-button type="submit" id="footerAnchor" expand="block">
+    Submit Post
+  </ion-button>
+</form>
+<ion-toast
     trigger="footerAnchor"
     position="bottom"
     positionAnchor="footer"
     [message]="toastMessage"
     duration="2000"
   ></ion-toast>
-  <!-- Submit Button -->
-  <ion-button id="footerAnchor" expand="block" (click)="onSubmit()">
-    Submit Post
-  </ion-button>
 </ion-content>

@@ -32,6 +32,95 @@
     "stainingMethods": ["Crystal Violet"],
     "addedBy": "admin",
     "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "nerve0002": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/nerve0003.gif"],
+    "choices": ["Cerebrum - H&E", "Medulla Spinalis - H&E", "Ganglion spinale - H&E", "Cerebellum - H&E"],
+    "rightChoice": 0,
+    "subjects": ["Nervous"],
+    "tags": ["cerebrum", "nervous tissue"],
+    "stainingMethods": ["H&E"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "dig0002": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/dig0003.jpg", "https://askhisto.b-cdn.net/dig0004.jpg"],
+    "choices": ["Pancreas - H&E", "Submandibular Gland - H&E", "Sublingual Gland - H&E", "Parotis - H&E"],
+    "rightChoice": 3,
+    "subjects": ["Digestive"],
+    "tags": ["gland", "parotis"],
+    "stainingMethods": ["H&E"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "dig0003": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/dig0005.jpg", "https://askhisto.b-cdn.net/dig0006.jpg", "https://askhisto.b-cdn.net/dig0007.jpg"],
+    "choices": ["Jejunum - H&E", "Duodenum - H&E", "Biliary Gland - H&E", "Ileum - H&E"],
+    "rightChoice": 2,
+    "subjects": ["Digestive"],
+    "tags": ["gland", "biliary"],
+    "stainingMethods": ["H&E"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "dig0004": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/dig0008.jpg", "https://askhisto.b-cdn.net/dig0009.jpg", "https://askhisto.b-cdn.net/dig00010.jpg"],
+    "choices": ["Pancreas - H&E", "Submandibular Gland - H&E", "Sublingual Gland - H&E", "Parotis - H&E"],
+    "rightChoice": 2,
+    "subjects": ["Digestive"],
+    "tags": ["gland", "sublingual"],
+    "stainingMethods": ["H&E"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "dig0005": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/dig0011.jpg", "https://askhisto.b-cdn.net/dig0012.jpg", "https://askhisto.b-cdn.net/dig00013.jpg"],
+    "choices": ["Sublingual Gland - Masson Trichrome & PAS", "Submandibular Gland - Masson Trichrome & PAS", "Submandibular Gland - Masson Trichrome", "Sublingual Gland - Masson Trichrome"],
+    "rightChoice": 1,
+    "subjects": ["Digestive"],
+    "tags": ["gland", "submundibular"],
+    "stainingMethods": ["Masson Trichrome","PAS"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "lymph0002": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/lymph0004.jpg", "https://askhisto.b-cdn.net/lymph0005.jpg", "https://askhisto.b-cdn.net/lymph0006.jpg"],
+    "choices": ["Timus - H&E", "Spleen - H&E", "Tonsilla Palatina - H&E", "Lymph Node - H&E"],
+    "rightChoice": 3,
+    "subjects": ["Lymphoid"],
+    "tags": ["lymph node"],
+    "stainingMethods": ["H&E"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "dig0006": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/dig0014.jpg", "https://askhisto.b-cdn.net/dig0015.jpg", "https://askhisto.b-cdn.net/dig00016.jpg"],
+    "choices": ["Pancreas - H&E", "Submandibular Gland - H&E", "Sublingual Gland - H&E", "Parotis - H&E"],
+    "rightChoice": 0,
+    "subjects": ["Digestive"],
+    "tags": ["gland", "parotis"],
+    "stainingMethods": ["H&E"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
+  },
+  "dig0007": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/dig0017.jpg", "https://askhisto.b-cdn.net/dig0018.jpg", "https://askhisto.b-cdn.net/dig00019.jpg"],
+    "choices": ["Kidney - PAS & Hemalaun", "Liver - H&E", "Liver - Masson Trichrome", "Kidney - H&E"],
+    "rightChoice": 2,
+    "subjects": ["Digestive"],
+    "tags": ["liver"],
+    "stainingMethods": ["H&E"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-23T12:00:00Z"
   }
+
 
   }
