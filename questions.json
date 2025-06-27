@@ -120,6 +120,53 @@
     "stainingMethods": ["H&E"],
     "addedBy": "admin",
     "addedDate": "2025-06-23T12:00:00Z"
+  },
+   "cvs0001": {
+    "type": "whichTissue",
+    "images": ["https://askhisto.b-cdn.net/cvs0001.jpg", "https://askhisto.b-cdn.net/cvs0002.jpg"],
+    "choices": ["Urethra - Safanin & Hemlaun", "Vein - Safanin & Hemlaun", "Muscular Artery - Safanin & Hemlaun", "Elastic Artery - Safanin & Hemlaun"],
+    "rightChoice": 2,
+    "subjects": ["Cardiovascular"],
+    "tags": ["artery","muscular artery"],
+    "stainingMethods": ["Safranin","Hemalaun"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-27T12:00:00Z"
+  },
+  "int0001": {
+    "type": "whichEpithelium",
+    "images": ["https://askhisto.b-cdn.net/int0001.jpg"],
+    "choices": [[ 
+  "Stratified squamous non-keratinized epithelium",
+  "Stratified squamous keratinized epithelium",
+  "Pseudostratified Epithelium",
+  "Transitional epithelium",
+  "Simple columnar epithelium"
+]
+],
+    "rightChoice": 1,
+    "subjects": ["Integumentary","Epithelium"],
+    "tags": ["skin","Stratified squamous epithelium"],
+    "stainingMethods": ["Masson Trichrome"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-27T12:00:00Z"
+  },
+   "resp0001": {
+    "type": "whichEpithelium",
+    "images": ["https://askhisto.b-cdn.net/resp0001.png"],
+    "choices": [[ 
+  "Stratified squamous non-keratinized epithelium",
+  "Stratified squamous keratinized epithelium",
+  "Pseudostratified Epithelium",
+  "Transitional epithelium",
+  "Simple columnar epithelium"
+]
+],
+    "rightChoice": 2,
+    "subjects": ["Respiratory","Epithelium"],
+    "tags": ["trakea","Pseudostratified Epithelium"],
+    "stainingMethods": ["Masson Trichrome"],
+    "addedBy": "admin",
+    "addedDate": "2025-06-27T12:00:00Z"
   }
 
 

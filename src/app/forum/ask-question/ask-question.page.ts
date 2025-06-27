@@ -10,13 +10,7 @@ import {
   IonIcon,
   IonButton,
   IonInput,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonCardContent,
   IonToast,
-  IonCardHeader,
 } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/models/Post';
@@ -27,6 +21,7 @@ import { ToolbarComponent } from '../../ui/toolbar/toolbar.component';
 import * as UC from '@uploadcare/file-uploader';
 import '@uploadcare/file-uploader/web/uc-file-uploader-regular.min.css';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { buildNthImageUrls } from 'src/helpers/build-links';
 
 @Component({
   selector: 'app-ask-question',
@@ -59,14 +54,15 @@ export class AskQuestionPage implements OnInit {
   private authSub?: Subscription;
 
   post: Post = {
-    type: 'whichTissue',
     content: '',
     images: [] as string[],
     subjects: [] as string[],
     tags: [] as string[],
     stainingMethods: [] as string[],
-    addedBy: '',
+    addedById: '',
+    addedByName: '',
     addedDate: new Date(),
+    approved: true
   };
 
   // UI state
@@ -119,17 +115,28 @@ export class AskQuestionPage implements OnInit {
     // ✅ Access uploaded file URLs like this
     const uploadedFileUrls = entries
       .filter(([key]) => key === 'my-uploader' || key === 'my-uploader[]')
-      .map(([_, value]) => value);
+      .map(([_, value]) => value) as string[];
+    const imageLinks : string[] = buildNthImageUrls(uploadedFileUrls[0]);
+    this.post.subjects = [...this.selectedSubjects];
+    this.post.images = [...imageLinks];
+     console.log('Submitting post:', this.post);
+    console.log('Uploaded File URLs:', imageLinks);
 
-    console.log('Uploaded File URLs:', uploadedFileUrls);
-    console.log(this.formOutput);
+     this.postService.addPost(this.post);
+     this.toastMessage = "Your post is submitted! "
+     this.resetForm();
+     this.router.navigate(['forum'])
+
   }
   ngOnInit() {
     this.authSub = this.authService.user$.subscribe((user) => {
       this.user = user;
-      if (user) this.post.addedBy = user.uid;
+      if (user) {
+        this.post.addedById = user.uid;
+        this.post.addedByName = user.displayName || 'anonymous';
+      } 
       else {
-        //  this.router.navigate(['/login'])
+          this.router.navigate(['/login'])
       }
     });
   }
@@ -201,14 +208,15 @@ export class AskQuestionPage implements OnInit {
 
   private resetForm() {
     this.post = {
-      type: 'whichTissue',
       content: '',
       images: [],
       subjects: [],
       tags: [],
       stainingMethods: [],
-      addedBy: this.user?.displayName || '',
+      addedByName: this.user?.displayName || 'anonymous',
+      addedById: this.user?.uid || '',
       addedDate: new Date(),
+      approved: true
     };
   }
 
