@@ -38,7 +38,7 @@
             <ion-avatar>
               <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
             </ion-avatar>
-            <ion-label>{{ post.addedBy }}</ion-label>
+            <ion-label>{{ post.addedByName || "anonymous" }}</ion-label>
           </ion-chip>
 
           <ion-chip color="medium" [disabled]="true">
@@ -117,7 +117,7 @@
             <ion-avatar>
               <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
             </ion-avatar>
-            <ion-label>{{ post.addedBy }}</ion-label>
+            <ion-label>{{ post.addedByName || "anonymous" }}</ion-label>
           </ion-chip>
 
           <ion-chip color="medium" [disabled]="true">
