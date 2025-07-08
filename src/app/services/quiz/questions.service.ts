@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where, limit, orderBy } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where, limit, orderBy, startAt } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Question } from 'src/app/models/Question';
@@ -15,13 +15,15 @@ export class QuestionService {
   constructor() {}
 
   // Create a question
-  addQuestion(question: Question): Promise<void> {
-    const questionToAdd = {
-      ...question,
-      addedDate: question.addedDate instanceof Date ? question.addedDate.toISOString() : question.addedDate
-    };
-    return addDoc(this.questionCollection, questionToAdd).then(() => {});
-  }
+ 
+addQuestion(question: Question): Promise<void> {
+  const questionToAdd = {
+    ...question,
+    addedDate: question.addedDate instanceof Date ? question.addedDate.toISOString() : question.addedDate,
+    random: Math.random() // Add this line
+  };
+  return addDoc(this.questionCollection, questionToAdd).then(() => {});
+}
 
   // Get question by ID
   getQuestionById(id: string): Observable<Question | undefined> {
@@ -43,7 +45,6 @@ export class QuestionService {
 
   getQuestionsByQuizSetting(settings: QuizSetting): Observable<Question[]> {
   let constraints: any[] = [];
-
   const useSubjectFilter = settings.subjects?.length && !(settings.subjects.length === 1 && settings.subjects[0] === 'ALL');
 
   if (useSubjectFilter) {
@@ -51,14 +52,33 @@ export class QuestionService {
   }
 
   if (settings.randomize) {
-    constraints.push(orderBy('addedDate')); // pseudo-random by date
+    // Use the random field instead of addedDate
+    constraints.push(orderBy('random'));
+  } else {
+    // Default ordering when not random
+    constraints.push(orderBy('addedDate', 'desc'));
   }
 
   constraints.push(limit(settings.numberOfQuestions));
 
   const q = query(this.questionCollection, ...constraints);
-
   return collectionData(q, { idField: 'id' }) as Observable<Question[]>;
 }
 
+// Add this to your QuestionService
+getRandomQuestions(count: number, subjects?: string[]): Observable<Question[]> {
+  const randomSeed = Math.random();
+  let constraints: any[] = [
+    orderBy('random'),
+    startAt(randomSeed),
+    limit(count)
+  ];
+
+  if (subjects && subjects.length && !(subjects.length === 1 && subjects[0] === 'ALL')) {
+    constraints.push(where('subjects', 'array-contains-any', subjects));
+  }
+
+  const q = query(this.questionCollection, ...constraints);
+  return collectionData(q, { idField: 'id' }) as Observable<Question[]>;
+}
 }
