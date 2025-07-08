@@ -219,5 +219,43 @@
     }
 
   </ion-card>
+ @if (user$ | async; as user) {
+  <ion-card class="comment-input-card">
+    <ion-card-content>
+      <ion-item lines="none" class="ion-no-padding">
+        <ion-avatar slot="start">
+          <img [src]="user.photoURL || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="User avatar">
+        </ion-avatar>
+        <!-- <ion-avatar>
+                  <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          </ion-avatar> -->
+        
+        <ion-textarea
+          name="contentField"
+          ngDefaultControl
+          [(ngModel)]="comment.content"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="Add a comment..."
+          rows="3"
+          autoGrow="true"
+          class="comment-textarea"
+          counter="true"
+          maxlength="500">
+        </ion-textarea>
+      </ion-item>
 
+      <div class="button-container">
+        <ion-button 
+          (click)="addComment(user)"
+          expand="block"
+          fill="solid"
+          color="primary"
+          [disabled]="!comment.content">
+          <ion-icon slot="start" name="send"></ion-icon>
+          Post Comment
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+}
 </ion-content>

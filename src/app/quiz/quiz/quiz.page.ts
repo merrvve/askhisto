@@ -68,6 +68,7 @@ export class QuizPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isComplete = false;
     const settings: QuizSetting = {
       subjects: ['ALL'],
       stainingMethods: ['ALL'],
