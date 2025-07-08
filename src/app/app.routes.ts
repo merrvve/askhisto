@@ -54,4 +54,8 @@ export const routes: Routes = [
     path: 'post/:id',
     loadComponent: () => import('./forum/posts/post-detail/post-detail.page').then( m => m.PostDetailPage)
   },
+  {
+    path: 'question-of-the-day',
+    loadComponent: () => import('./quiz/qod/qod.page').then( m => m.QodPage)
+  },
 ];

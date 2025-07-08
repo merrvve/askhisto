@@ -17,7 +17,9 @@ import { ToolbarComponent } from "../ui/toolbar/toolbar.component";
   imports: [IonAvatar, IonChip,
     //IonRow, 
     IonLabel, IonIcon, IonItem, IonList,
-    IonCardContent, IonThumbnail, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonButton, IonCard, IonContent,
+    IonCardContent, IonThumbnail, 
+    //IonCardSubtitle, 
+    IonCardTitle, IonCardHeader, IonCard, IonButton, IonCard, IonContent,
     AsyncPipe, TruncatePipe, FirebaseDatePipe, ToolbarComponent],
 })
 export class HomePage {
@@ -32,6 +34,11 @@ export class HomePage {
   startQuiz() {
     this.quizSetupService.reset(); // clear any previous settings
     this.router.navigate(['/quiz']);
+  }
+
+  Qod() {
+    this.quizSetupService.reset(); // clear any previous settings
+    this.router.navigate(['/question-of-the-day']);
   }
 
   

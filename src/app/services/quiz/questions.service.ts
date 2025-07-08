@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where, limit, orderBy, startAt } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where, limit, orderBy, startAt, getDocs } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Question } from 'src/app/models/Question';
@@ -81,4 +81,24 @@ getRandomQuestions(count: number, subjects?: string[]): Observable<Question[]> {
   const q = query(this.questionCollection, ...constraints);
   return collectionData(q, { idField: 'id' }) as Observable<Question[]>;
 }
+
+getLatestQuestion(): Observable<Question | null> {
+   
+      const q = query(
+        this.questionCollection,
+        orderBy('addedDate', 'desc'), // Assuming you have a createdAt timestamp field
+        limit(1)
+      );
+      return collectionData(q, { idField: 'id' }).pipe(
+      map(questions => {
+        if (questions.length === 0) {
+          console.log(questions)
+          return null;
+        }
+        
+        return questions[0] as Question;
+      })
+    );
+    }
+
 }
