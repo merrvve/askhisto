@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where, orderBy, limit } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
-import { Timestamp, serverTimestamp, startAfter } from 'firebase/firestore';
+import { Timestamp, getDocs, serverTimestamp, startAfter, writeBatch } from 'firebase/firestore';
 import { Post } from 'src/app/models/Post';
 
 @Injectable({
@@ -43,11 +43,26 @@ export class PostService {
     await updateDoc(postDoc, { ...post });
   }
 
-  // Delete Post
   async deletePost(id: string): Promise<void> {
-    const postDoc = doc(this.firestore, `posts/${id}`);
-    await deleteDoc(postDoc);
-  }
+  // First delete all comments associated with this post
+  const commentsRef = collection(this.firestore, 'comments');
+  const q = query(commentsRef, where('postId', '==', id));
+  
+  const querySnapshot = await getDocs(q);
+  const batch = writeBatch(this.firestore);
+  
+  // Add all comments to batch delete
+  querySnapshot.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+  
+  // Add the post deletion to the same batch
+  const postDoc = doc(this.firestore, `posts/${id}`);
+  batch.delete(postDoc);
+  
+  // Commit the batch
+  await batch.commit();
+}
 
   // Query Example: Get posts of specific type
   getPostsByType(type: string): Observable<Post[]> {

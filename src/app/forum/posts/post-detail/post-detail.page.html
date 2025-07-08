@@ -45,6 +45,18 @@
             <ion-icon name="calendar"></ion-icon>
             <ion-label>{{ post.addedDate | firebaseDate:'shortDate' }}</ion-label>
           </ion-chip>
+
+             @if(user$ |async; as user) {
+          @if(user.uid === post.addedById) {
+<ion-button fill="clear" size="small" id="present-post-alert" color="danger">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+              
+            <ion-alert trigger="present-post-alert" header="Delete Post"
+              message="The message will be deleted permanently." [buttons]="alertPostButtons"></ion-alert>
+          }
+          
+        }
         </div>
 
         <!-- Categories Chips -->
@@ -107,6 +119,7 @@
 
     <!-- Post Content -->
     <ion-card-content>
+     
       <div class="post-content">
         <p class="post-text">{{ post.content }}</p>
 
@@ -124,7 +137,20 @@
             <ion-icon name="calendar"></ion-icon>
             <ion-label>{{ post.addedDate | firebaseDate:'shortDate' }}</ion-label>
           </ion-chip>
+          @if(user$ |async; as user) {
+          @if(user.uid === post.addedById) {
+<ion-button fill="clear" size="small" id="present-post-alert" color="danger">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+              
+            <ion-alert trigger="present-post-alert" header="Delete Post"
+              message="The message will be deleted permanently." [buttons]="alertPostButtons"></ion-alert>
+          }
+          
+        }
+        
         </div>
+        
 
         <!-- Categories Chips -->
         <div class="categories-row">
@@ -181,6 +207,8 @@
 
         <!-- Post Content -->
         <ion-card-content>
+          <!-- Action buttons (only shown to author) -->
+
           <div class="post-content">
             <p class="post-text">{{ comment.content }}</p>
 
@@ -198,10 +226,27 @@
                 <ion-icon name="calendar"></ion-icon>
                 <ion-label>{{ comment.createdAt| firebaseDate:'shortDate' }}</ion-label>
               </ion-chip>
+              
             </div>
 
 
           </div>
+          @if (user$ | async; as user) {
+          @if (user.uid === comment.authorId) {
+          <div class="comment-actions">
+            <ion-button fill="clear" size="small" (click)="startEdit(comment)">
+              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+            </ion-button>
+
+            <ion-button fill="clear" size="small" id="present-alert" color="danger" (click)="selectComment(comment.id)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+            <ion-alert trigger="present-alert" header="Delete Comment"
+              message="The message will be deleted permanently." [buttons]="alertButtons"></ion-alert>
+
+          </div>
+          }
+          }
         </ion-card-content>
       </ion-card>
       }
@@ -219,7 +264,7 @@
     }
 
   </ion-card>
- @if (user$ | async; as user) {
+  @if (user$ | async; as user) {
   <ion-card class="comment-input-card">
     <ion-card-content>
       <ion-item lines="none" class="ion-no-padding">
@@ -229,27 +274,15 @@
         <!-- <ion-avatar>
                   <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
           </ion-avatar> -->
-        
-        <ion-textarea
-          name="contentField"
-          ngDefaultControl
-          [(ngModel)]="comment.content"
-          [ngModelOptions]="{standalone: true}"
-          placeholder="Add a comment..."
-          rows="3"
-          autoGrow="true"
-          class="comment-textarea"
-          counter="true"
-          maxlength="500">
+
+        <ion-textarea name="contentField" ngDefaultControl [(ngModel)]="comment.content"
+          [ngModelOptions]="{standalone: true}" placeholder="Add a comment..." rows="3" autoGrow="true"
+          class="comment-textarea" counter="true" maxlength="500">
         </ion-textarea>
       </ion-item>
 
       <div class="button-container">
-        <ion-button 
-          (click)="addComment(user)"
-          expand="block"
-          fill="solid"
-          color="primary"
+        <ion-button (click)="addComment(user)" expand="block" fill="solid" color="primary"
           [disabled]="!comment.content">
           <ion-icon slot="start" name="send"></ion-icon>
           Post Comment
@@ -257,5 +290,5 @@
       </div>
     </ion-card-content>
   </ion-card>
-}
+  }
 </ion-content>

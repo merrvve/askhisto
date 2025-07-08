@@ -1,8 +1,23 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgModel } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonButton, IonIcon, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonChip, IonAvatar, IonLabel, IonSpinner, IonItem } from '@ionic/angular/standalone';
-import { ActivatedRoute } from '@angular/router';
+import {
+  IonContent,
+  IonAlert,
+  IonButton,
+  IonIcon,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonChip,
+  IonAvatar,
+  IonLabel,
+  IonSpinner,
+  IonItem,
+} from '@ionic/angular/standalone';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from 'src/app/models/Post';
 import { FirebaseDatePipe } from 'src/app/pipes/firebase-date.pipe';
 import { Comment } from 'src/app/models/Comment';
@@ -29,36 +44,94 @@ export interface SwiperSlideChangeEvent {
   templateUrl: './post-detail.page.html',
   styleUrls: ['./post-detail.page.scss'],
   standalone: true,
-  imports: [IonItem, IonSpinner, IonLabel, IonAvatar, IonChip, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonIcon, 
-    FirebaseDatePipe, 
-    IonContent,CommonModule, FormsModule,
-  ToolbarComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA] 
+  imports: [
+    IonItem,
+    IonSpinner,
+    IonLabel,
+    IonAvatar,
+    IonChip,
+    IonCardContent,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonCardHeader,
+    IonCard,
+    IonIcon,
+    FirebaseDatePipe,
+    IonAlert,
+    IonContent,
+    CommonModule,
+    FormsModule,
+    ToolbarComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PostDetailPage implements OnInit {
+  selectedComment?: string;
+  
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+        this.confirmDelete(this.selectedComment);
+      },
+    },
+  ];
+
+  public alertPostButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+        if (this.postId) {
+          this.postService.deletePost(this.postId);
+          this.router.navigate(['/'])
+        }
+      },
+    },
+  ];
+
+  startEdit(_t167: Comment) {
+    throw new Error('Method not implemented.');
+  }
 
   postId?: string;
   post?: Post | null;
   post$?: Observable<Post>;
   comments$?: Observable<Comment[]>;
-  comment : Comment = {
+  comment: Comment = {
     postId: '',
     content: '',
     authorId: this.authService.currentUser?.uid || '',
     authorName: this.authService.currentUser?.displayName || 'anonymous',
-    createdAt: new Date()
+    createdAt: new Date(),
   };
   user$?: Observable<User | null>;
- 
+
   constructor(
     private route: ActivatedRoute,
     private postService: PostService,
     private commentService: CommentService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
- ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
         this.postId = id;
@@ -67,32 +140,41 @@ export class PostDetailPage implements OnInit {
         this.loadComments(id);
       }
     });
-    this.user$ =this.authService.user$;
+    this.user$ = this.authService.user$;
   }
 
   loadPost() {
     console.log(this.postId);
-    if(this.postId) {
+    if (this.postId) {
       this.post = this.postService.getCurrentPostMatchId(this.postId);
-      console.log(this.postId, this.post)
-      if(!this.post) {
+      console.log(this.postId, this.post);
+      if (!this.post) {
         this.post$ = this.postService.getPostById(this.postId);
       }
+    } else {
+      throw 'error getting post id';
     }
-    else {
-      throw('error getting post id');
-    }
-    
   }
-  loadComments(id : string | null) {
-    if(id) {
+  loadComments(id: string | null) {
+    if (id) {
       this.comments$ = this.commentService.getCommentsByPostId(id);
-
     }
   }
   addComment(user: User) {
     this.comment.authorId = user.uid;
     this.comment.authorName = user.displayName || 'anonymous';
-   this.commentService.createComment(this.comment);
+    this.commentService.createComment(this.comment);
   }
+
+  selectComment(id: string | undefined) {
+    this.selectedComment = id;
+  }
+
+  confirmDelete(id: string | undefined) {
+    if (id) {
+      this.commentService.deleteComment(id);
+      
+    }
+  }
+
 }
