@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, User as FirebaseUser } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, User as FirebaseUser, signInWithCredential } from '@angular/fire/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'src/app/models/User';
+
+import { Capacitor } from '@capacitor/core';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 
 @Injectable({
   providedIn: 'root',
@@ -30,15 +33,41 @@ export class AuthService {
   }
 
   // Login with Google
-  signInWithGoogle(): Promise<FirebaseUser> {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(this.auth, provider)
-      .then(result => result.user);
+  async signInWithGoogle(): Promise<FirebaseUser> {
+    // const provider = new GoogleAuthProvider();
+    // return signInWithPopup(this.auth, provider)
+    //   .then(result => result.user);
+    if (Capacitor.isNativePlatform()) {
+      // ✅ Native Mobile Flow
+      const result = await FirebaseAuthentication.signInWithGoogle();
+
+      const idToken = result.credential?.idToken;
+      const accessToken = result.credential?.accessToken;
+
+      if (!idToken) {
+        throw new Error('Native Google Sign-In failed: No ID token returned.');
+      }
+
+      const credential = GoogleAuthProvider.credential(idToken, accessToken);
+
+      // ✅ Sign in to Firebase Web SDK with native credential
+      const firebaseUserCredential = await signInWithCredential(this.auth, credential);
+      return firebaseUserCredential.user;
+
+    } else {
+      // ✅ Web Flow
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(this.auth, provider);
+      return result.user;
+    }
   }
 
   // Logout
-  logout(): Promise<void> {
-    return signOut(this.auth);
+  async logout(): Promise<void> {
+    if (Capacitor.isNativePlatform()) {
+      await FirebaseAuthentication.signOut(); // Native layer
+    }
+    await signOut(this.auth); // Firebase JS SDK
   }
 
   // Get current user snapshot

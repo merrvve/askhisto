@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'histology-quiz-app',
+  appId: 'askhisto.web.app',
+  appName: 'akshisto',
   webDir: 'www'
 };
 

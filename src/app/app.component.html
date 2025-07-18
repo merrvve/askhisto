@@ -1,13 +1,11 @@
-<ion-app fullscreen >
+<ion-app>
 
-  <ion-content  class="ion-padding" style="--padding-bottom: 140px">
+  <ion-content class="ion-padding" [style.padding-top]="safeTopPadding" [style.padding-bottom]="safeBottomPadding">
     <ion-router-outlet></ion-router-outlet>
   </ion-content>
-  
-  <!-- Global Bottom Navigation -->
-  <ion-footer id="footer">
-    <ion-tab-bar slot="bottom">
 
+  <ion-footer [style.padding-bottom]="safeBottomPadding">
+    <ion-tab-bar slot="bottom">
       <ion-tab-button (click)="navigate('home')">
         <ion-icon name="home-outline"></ion-icon>
         <ion-label>Home</ion-label>
@@ -32,7 +30,6 @@
         <ion-icon name="person-circle-outline"></ion-icon>
         <ion-label>Profile</ion-label>
       </ion-tab-button>
-
     </ion-tab-bar>
   </ion-footer>
 
