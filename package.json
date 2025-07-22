@@ -31,7 +31,7 @@
     "@capacitor/status-bar": "7.0.1",
     "@ionic/angular": "^8.0.0",
     "@uploadcare/file-uploader": "^1.5.2",
-    "firebase": "^11.9.1",
+    "firebase": "^11.10.0",
     "firebase-admin": "^13.4.0",
     "ionicons": "^7.4.0",
     "ngx-uploadcare-widget": "^4.0.2",

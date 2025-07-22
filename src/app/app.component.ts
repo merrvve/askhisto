@@ -5,6 +5,7 @@ import { Platform } from '@ionic/angular';
 import { StatusBar } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -19,6 +20,7 @@ export class AppComponent {
     private platform: Platform
   ) {
      this.initializeApp();
+     
   }
 
   initializeApp() {
@@ -26,6 +28,7 @@ export class AppComponent {
       if (Capacitor.isNativePlatform()) {
         try {
           await StatusBar.setOverlaysWebView({ overlay: false });
+          
         } catch (err) {
           console.warn('StatusBar error:', err);
         }
