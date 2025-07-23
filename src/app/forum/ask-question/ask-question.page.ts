@@ -116,7 +116,12 @@ export class AskQuestionPage implements OnInit {
     const uploadedFileUrls = entries
       .filter(([key]) => key === 'my-uploader' || key === 'my-uploader[]')
       .map(([_, value]) => value) as string[];
-    const imageLinks : string[] = buildNthImageUrls(uploadedFileUrls[0]);
+      console.log(uploadedFileUrls);
+      let imageLinks : string[] = []
+      if(uploadedFileUrls[0] !== '') {
+        imageLinks = buildNthImageUrls(uploadedFileUrls[0]);
+      }
+    
     this.post.subjects = [...this.selectedSubjects];
     this.post.images = [...imageLinks];
      console.log('Submitting post:', this.post);
