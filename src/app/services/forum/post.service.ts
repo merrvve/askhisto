@@ -27,9 +27,10 @@ export class PostService {
   }
 
   // Get All Posts (Observable)
-  getPosts(): Observable<Post[]> {
-    return collectionData(this.postsCollection, { idField: 'id' }) as Observable<Post[]>;
-  }
+ getPosts(): Observable<Post[]> {
+  const approvedPostsQuery = query(this.postsCollection, where('approved', '==', true));
+  return collectionData(approvedPostsQuery, { idField: 'id' }) as Observable<Post[]>;
+}
 
   // Get Single Post by ID (Observable)
   getPostById(id: string): Observable<Post> {
@@ -77,6 +78,7 @@ export class PostService {
     q = query(
       this.postsCollection,
       orderBy('addedDate', 'desc'),
+      where('approved', '==', true),
       startAfter(lastDate),
       limit(limitCount)
     );
@@ -84,6 +86,7 @@ export class PostService {
     q = query(
       this.postsCollection,
       orderBy('addedDate', 'desc'),
+      where('approved', '==', true),
       limit(limitCount)
     );
   }

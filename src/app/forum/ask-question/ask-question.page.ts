@@ -62,7 +62,7 @@ export class AskQuestionPage implements OnInit {
     addedById: '',
     addedByName: '',
     addedDate: new Date(),
-    approved: true
+    approved: false
   };
 
   // UI state
@@ -123,7 +123,7 @@ export class AskQuestionPage implements OnInit {
     console.log('Uploaded File URLs:', imageLinks);
 
      this.postService.addPost(this.post);
-     this.toastMessage = "Your post is submitted! "
+     this.toastMessage = "Your post has been submitted! It will be reviewed by the moderators before being published. "
      this.resetForm();
      this.router.navigate(['forum'])
 
