@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonApp, IonRouterOutlet, IonTabButton, IonFooter, IonTabBar, IonIcon, IonLabel, IonContent, IonHeader, IonToolbar, IonTitle, IonButtons } from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet, IonTabButton, IonFooter, IonTabBar, IonIcon, IonLabel, IonContent, IonHeader, IonToolbar, IonTitle, IonButtons, IonTabs } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular';
-import { StatusBar } from '@capacitor/status-bar';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [ IonContent, IonLabel, IonIcon, IonTabBar, IonFooter, IonTabButton, IonApp, IonRouterOutlet],
+  imports: [  IonContent, IonLabel, IonIcon, IonTabBar, IonFooter, IonTabButton, IonApp, IonRouterOutlet],
 })
 export class AppComponent {
 
@@ -28,6 +28,7 @@ export class AppComponent {
       if (Capacitor.isNativePlatform()) {
         try {
           await StatusBar.setOverlaysWebView({ overlay: false });
+          await StatusBar.setStyle({ style: Style.Default });
           
         } catch (err) {
           console.warn('StatusBar error:', err);
