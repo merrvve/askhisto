@@ -5,6 +5,7 @@ import { User } from 'src/app/models/User';
 
 import { Capacitor } from '@capacitor/core';
 import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
+import { doc, Firestore, setDoc, Timestamp } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,9 @@ export class AuthService {
 
   user$: Observable<User | null> = this.userSubject.asObservable();
 
-  constructor(private auth: Auth) {
+  constructor(private auth: Auth,
+    private firestore: Firestore
+  ) {
     onAuthStateChanged(this.auth, (user) => {
       this.userSubject.next(user);
     });
@@ -73,5 +76,24 @@ export class AuthService {
   // Get current user snapshot
   get currentUser(): FirebaseUser | null {
     return this.auth.currentUser;
+  }
+
+  async markUserAsDeleted(): Promise<void> {
+    const currentUser = this.auth.currentUser;
+
+    if (!currentUser) {
+      throw new Error('No user is currently logged in.');
+    }
+
+    const uid = currentUser.uid;
+    const deletedAccountsRef = doc(this.firestore, `deletedAccounts/${uid}`);
+
+    const deletionRecord = {
+      uid: uid,
+      email: currentUser.email || null,
+      deletedAt: Timestamp.now(),
+    };
+
+    await setDoc(deletedAccountsRef, deletionRecord);
   }
 }

@@ -26,7 +26,8 @@ export class DeleteUserPage implements OnInit {
    deleteAccount() {
     // Hesap silme işlemini başlat
     // Burada gerçek API çağrısını yapmalısınız
-    alert('Your account will be deleted permanently.');
+    alert('Your account will be deleted permanently in 30 days.');
+    this.auth.markUserAsDeleted();
     this.auth.logout();
     this.router.navigate(['/']);
   }
