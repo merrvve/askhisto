@@ -47,6 +47,9 @@ export class ProfilePage implements OnInit {
   logout() {
     this.authService.logout();
   }
+  deleteAccount() {
+    this.router.navigate(['/delete-user']);
+  }
   ngOnDestroy() {
     this.authSub?.unsubscribe();
   }

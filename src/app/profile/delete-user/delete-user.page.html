@@ -1,0 +1,38 @@
+<app-toolbar [title]="'Delete Account'"></app-toolbar>
+
+
+<ion-content class="ion-padding">
+  <h2>Delete Your Account - AskHisto</h2>
+
+  <p>
+    We're sorry to see you go. This page lets you request the deletion of your account and associated data
+    stored by <strong>AskHisto</strong>.
+  </p>
+
+  <h3>How to delete your account:</h3>
+  <ol>
+    <li>Tap the button below to submit a deletion request.</li>
+    <li>We will remove your data from our systems within 30 days.</li>
+    <li>All user-generated content will also be removed.</li>
+  </ol>
+
+  <ion-button expand="full" color="danger" (click)="deleteAccount()">
+    Delete My Account
+  </ion-button>
+
+  <h3>Data That Will Be Deleted</h3>
+  <ul>
+    <li>Account information (email, username)</li>
+    <li>Profile data and preferences</li>
+    <li>User posts and uploaded content</li>
+  </ul>
+
+  <h3>Data Retention Policy</h3>
+  <p>
+    For security, fraud prevention, and legal compliance, some metadata (e.g., login logs) may be retained for up to 30 days after deletion.
+  </p>
+
+  <p>
+    If you have any questions, please contact support at <a href="mailto:mervsen@gmail.com">mervsen&#64;gmail.com </a>.
+  </p>
+</ion-content>

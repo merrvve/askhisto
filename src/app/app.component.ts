@@ -28,7 +28,7 @@ export class AppComponent {
       if (Capacitor.isNativePlatform()) {
         try {
           await StatusBar.setOverlaysWebView({ overlay: false });
-          await StatusBar.setStyle({ style: Style.Default });
+          await StatusBar.setStyle({ style: Style.Dark });
           
         } catch (err) {
           console.warn('StatusBar error:', err);

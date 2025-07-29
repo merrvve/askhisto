@@ -58,4 +58,8 @@ export const routes: Routes = [
     path: 'question-of-the-day',
     loadComponent: () => import('./quiz/qod/qod.page').then( m => m.QodPage)
   },
+  {
+    path: 'delete-user',
+    loadComponent: () => import('./profile/delete-user/delete-user.page').then( m => m.DeleteUserPage)
+  },
 ];

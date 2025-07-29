@@ -3,10 +3,10 @@ apply plugin: 'com.google.gms.google-services'
 
 
 android {
-    namespace "io.ionic.starter"
+    namespace "askhisto.web.app"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "io.ionic.starter"
+        applicationId "askhisto.web.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

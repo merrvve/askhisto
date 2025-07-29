@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:105164352797:android:1fa3cc2d79686b6fa785f4",
         "android_client_info": {
-          "package_name": "io.ionic.starter"
+          "package_name": "askhisto.web.app"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "105164352797-8qe2ou10ais2gb0imra74gp1avuhtu74.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "io.ionic.starter",
+            "package_name": "askhisto.web.app",
             "certificate_hash": "f42fd7c463537a5bdab12c652edaa80b75f1f248"
           }
         },
@@ -26,7 +26,7 @@
           "client_id": "105164352797-vtc70kmge45q8vg2p6e7qed73pb1g9vq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "io.ionic.starter",
+            "package_name": "askhisto.web.app",
             "certificate_hash": "58ca86ebe5adf4c514d5b4fe090ad1b3400dcc1d"
           }
         },

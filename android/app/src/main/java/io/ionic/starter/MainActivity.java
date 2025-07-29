@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package askhisto.web.app;
 
 import com.getcapacitor.BridgeActivity;
 
